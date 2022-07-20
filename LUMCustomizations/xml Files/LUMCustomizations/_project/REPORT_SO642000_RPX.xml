@@ -1,5 +1,5 @@
 ﻿<Report Name="so642000.rpx">
-    <Report version="20201103" Name="report1">
+    <Report version="20211215" Name="report1">
         <CommonSettings>
             <ViewPdf>True</ViewPdf>
         </CommonSettings>
@@ -326,17 +326,6 @@
                 <ParentName>SOShipLine</ParentName>
             </ReportRelation>
             <ReportRelation>
-                <ChildAlias>SOBranch</ChildAlias>
-                <ChildName>Branch</ChildName>
-                <Links>
-                    <RelationRow>
-                        <ChildField>BranchID</ChildField>
-                        <ParentField>BranchID</ParentField>
-                    </RelationRow>
-                </Links>
-                <ParentName>SOOrder</ParentName>
-            </ReportRelation>
-            <ReportRelation>
                 <ChildName>Organization</ChildName>
                 <Links>
                     <RelationRow>
@@ -344,7 +333,6 @@
                         <ParentField>OrganizationID</ParentField>
                     </RelationRow>
                 </Links>
-                <ParentAlias>SOBranch</ParentAlias>
                 <ParentName>Branch</ParentName>
             </ReportRelation>
             <ReportRelation>
@@ -433,8 +421,29 @@
                 <ParentAlias>CustomerLocation</ParentAlias>
                 <ParentName>Location</ParentName>
             </ReportRelation>
+            <ReportRelation>
+                <ChildName>OrganizationBAccount</ChildName>
+                <Links>
+                    <RelationRow>
+                        <ChildField>OrganizationID</ChildField>
+                        <ParentField>OrganizationID</ParentField>
+                    </RelationRow>
+                </Links>
+                <ParentName>Branch</ParentName>
+            </ReportRelation>
+            <ReportRelation>
+                <ChildAlias>OrganizationContact</ChildAlias>
+                <ChildName>Contact</ChildName>
+                <Links>
+                    <RelationRow>
+                        <ChildField>ContactID</ChildField>
+                        <ParentField>DefContactID</ParentField>
+                    </RelationRow>
+                </Links>
+                <ParentName>OrganizationBAccount</ParentName>
+            </ReportRelation>
         </Relations>
-        <SchemaUrl>http://localhost/AcumaticaWaldom/</SchemaUrl>
+        <SchemaUrl>https://waldomelectronics.acumatica.com/</SchemaUrl>
         <Sorting>
             <SortExp>
                 <DataField>SOShipment.ShipmentNbr</DataField>
@@ -5210,6 +5219,211 @@
                 </Fields>
                 <FullName>PX.Objects.CR.Location</FullName>
             </ReportTable>
+            <ReportTable Name="OrganizationBAccount">
+                <Fields>
+                    <ReportField Name="AcctCD">
+                    </ReportField>
+                    <ReportField Name="AcctCD_Segment1">
+                    </ReportField>
+                    <ReportField Name="AcctName">
+                    </ReportField>
+                    <ReportField Name="AcctReferenceNbr">
+                    </ReportField>
+                    <ReportField Name="BAccountID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="BaseCuryID">
+                    </ReportField>
+                    <ReportField Name="CampaignSourceID">
+                    </ReportField>
+                    <ReportField Name="CampaignSourceID_CRCampaign_campaignName">
+                    </ReportField>
+                    <ReportField Name="CampaignSourceID_description">
+                    </ReportField>
+                    <ReportField Name="CasesCount">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="ClassID">
+                    </ReportField>
+                    <ReportField Name="ClassID_CRCustomerClass_description">
+                    </ReportField>
+                    <ReportField Name="ClassID_description">
+                    </ReportField>
+                    <ReportField Name="ConsolidateToParent">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="ConsolidatingBAccountID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="COrgBAccountID">
+                    </ReportField>
+                    <ReportField Name="COrgBAccountID_BranchItem_acctName">
+                    </ReportField>
+                    <ReportField Name="COrgBAccountID_description">
+                    </ReportField>
+                    <ReportField Name="Count">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="CreatedByID">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_displayName">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_Username">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_description">
+                    </ReportField>
+                    <ReportField Name="CreatedByScreenID">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="DefAddressID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="DefAddressID_Address_displayName">
+                    </ReportField>
+                    <ReportField Name="DefAddressID_description">
+                    </ReportField>
+                    <ReportField Name="DefContactID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="DefLocationID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="DefLocationID_description">
+                    </ReportField>
+                    <ReportField Name="DefLocationID_Location_locationCD">
+                    </ReportField>
+                    <ReportField Name="EntityTypeID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="GroupMask">
+                        <DataType>Object</DataType>
+                    </ReportField>
+                    <ReportField Name="HSEntityTypeID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="IsBranch">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="IsCustomerOrCombined">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="LastActivity">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_description">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_displayName">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_Username">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByScreenID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="LegalName">
+                    </ReportField>
+                    <ReportField Name="NoteActivity">
+                    </ReportField>
+                    <ReportField Name="NoteFiles">
+                    </ReportField>
+                    <ReportField Name="NoteID">
+                        <DataType>Object</DataType>
+                    </ReportField>
+                    <ReportField Name="NoteImages">
+                    </ReportField>
+                    <ReportField Name="NotePopupText">
+                    </ReportField>
+                    <ReportField Name="NoteText">
+                    </ReportField>
+                    <ReportField Name="OrganizationID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="OrganizationType">
+                    </ReportField>
+                    <ReportField Name="OwnerID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="OwnerID_description">
+                    </ReportField>
+                    <ReportField Name="OwnerID_Owner_displayName">
+                    </ReportField>
+                    <ReportField Name="ParentBAccountID">
+                    </ReportField>
+                    <ReportField Name="ParentBAccountID_BAccountR_acctName">
+                    </ReportField>
+                    <ReportField Name="ParentBAccountID_description">
+                    </ReportField>
+                    <ReportField Name="ParentBAccountID_Segment1">
+                    </ReportField>
+                    <ReportField Name="PreviewHtml">
+                    </ReportField>
+                    <ReportField Name="PrimaryContactID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="PseudonymizationStatus">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="Secured">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="Selected">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="Status">
+                    </ReportField>
+                    <ReportField Name="TaxRegistrationID">
+                    </ReportField>
+                    <ReportField Name="TaxZoneID">
+                    </ReportField>
+                    <ReportField Name="TaxZoneID_description">
+                    </ReportField>
+                    <ReportField Name="TaxZoneID_TaxZone_descr">
+                    </ReportField>
+                    <ReportField Name="tstamp">
+                    </ReportField>
+                    <ReportField Name="Type">
+                    </ReportField>
+                    <ReportField Name="ViewInCrm">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="VOrgBAccountID">
+                    </ReportField>
+                    <ReportField Name="VOrgBAccountID_BranchItem_acctName">
+                    </ReportField>
+                    <ReportField Name="VOrgBAccountID_description">
+                    </ReportField>
+                    <ReportField Name="VStatus">
+                    </ReportField>
+                    <ReportField Name="WorkgroupID">
+                    </ReportField>
+                    <ReportField Name="WorkgroupID_description">
+                    </ReportField>
+                    <ReportField Name="WorkgroupID_EPCompanyTree_description">
+                    </ReportField>
+                </Fields>
+                <FullName>PX.Objects.CS.DAC.OrganizationBAccount</FullName>
+            </ReportTable>
         </Tables>
         <Version>20220419</Version>
         <ViewerFields>
@@ -5318,6 +5532,7 @@
         </ViewerFields>
         <Sections>
             <PageHeader Name="pageHeaderSection1">
+                <Expanded>False</Expanded>
                 <Height>0.08333in</Height>
                 <Visible>False</Visible>
             </PageHeader>
@@ -5348,8 +5563,8 @@
                         <Value>=[SOShipLine.ShippedQty]</Value>
                     </PictureBox>
                     <TextBox Name="textBox10">
-                        <Location>264px, 16px</Location>
-                        <Size>328px, 16px</Size>
+                        <Location>232px, 16px</Location>
+                        <Size>360px, 16px</Size>
                         <Style>
                             <Padding>
                                 <Left>3px</Left>
@@ -5522,7 +5737,7 @@
                     </TextBox>
                     <TextBox Name="textBox9">
                         <Location>200px, 16px</Location>
-                        <Size>64px, 16px</Size>
+                        <Size>32px, 16px</Size>
                         <Style>
                             <Font>
                                 <Style>Bold</Style>
@@ -5534,7 +5749,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                         </Style>
                         <StyleName>Normal</StyleName>
-                        <Value>Description : </Value>
+                        <Value>Desc: </Value>
                     </TextBox>
                 </Items>
             </Detail>
@@ -5583,12 +5798,14 @@
                                         </Style>
                                         <StyleName>Normal</StyleName>
                                         <Value>Bill To:</Value>
+                                        <VisibleExpr>=IIF([SOLine.OrigOrderType] = 'BF', 'False', 'True')</VisibleExpr>
                                     </TextBox>
                                     <TextBox Name="textBox17">
                                         <Location>360px, 17px</Location>
                                         <Size>336px, 96px</Size>
                                         <StyleName>RecepientCompany</StyleName>
                                         <Value>=IIf([BillingContact.FullName]&lt;&gt;null,    [BillingContact.FullName]+'{br}','') #010;+IIf([BillingAddress.AddressLine1]&lt;&gt;null,[BillingAddress.AddressLine1]+'{br}','')#010;+IIf([BillingAddress.AddressLine2]&lt;&gt;null,[BillingAddress.AddressLine2]+'{br}','')#010;+IIf([BillingAddress.City]&lt;&gt;null,        [BillingAddress.City]+' ','')#010;+IIf([BillingAddress.State]&lt;&gt;null,       [BillingAddress.State]+' ','')#010;+IIf([BillingAddress.PostalCode]&lt;&gt;null,  [BillingAddress.PostalCode],'')#010;+IIf([BillingAddress.City]&lt;&gt;null OR [BillingAddress.State]&lt;&gt;null OR [BillingAddress.PostalCode]&lt;&gt;null,'{br}','')#010;+IIf([BillingAddress.CountryID]&lt;&gt;null,   [BillingAddress.CountryID_Country_description]+'{br}','')#010;+IIf([BillingContact.Attention]&lt;&gt;null,  'Attn: ' + [BillingContact.Attention],'')</Value>
+                                        <VisibleExpr>=IIF([SOLine.OrigOrderType] = 'BF', 'False', 'True')</VisibleExpr>
                                     </TextBox>
                                     <TextBox Name="textBox26">
                                         <Location>0px, 0px</Location>
@@ -5638,22 +5855,7 @@
                                 <Location>376px, 24px</Location>
                                 <Size>320px, 104px</Size>
                                 <StyleName>SenderCompany</StyleName>
-                                <Value>=IIf([CompanyBAccount.AcctName]&lt;&gt; null, [CompanyBAccount.AcctName] + '{br}','')#010;+IIf([CompanyAddress.AddressLine1]&lt;&gt; null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2]&lt;&gt;null,[CompanyAddress.AddressLine2] + '{br}','')#010;+IIf([CompanyAddress.City]&lt;&gt;null, [CompanyAddress.City],'')#010;+IIf([CompanyAddress.City]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([CompanyAddress.State]&lt;&gt;null,[CompanyAddress.State],'')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null,[CompanyAddress.PostalCode],'')#010;+'{br}'#010;+IIf([CompanyContact.Phone1] &lt;&gt;null,'Phone: ' + [CompanyContact.Phone1]+ '{br}','')#010;+IIf([CompanyContact.Fax] &lt;&gt;null,'Fax: ' + [CompanyContact.Fax]+ '{br}','')#010;+IIf([CompanyContact.WebSite]&lt;&gt;null,'Web: '+[CompanyContact.WebSite],'')</Value>
-                            </TextBox>
-                            <TextBox Name="textBox2">
-                                <Location>376px, 136px</Location>
-                                <Size>80px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                </Style>
-                                <Value>Salesperson: </Value>
-                            </TextBox>
-                            <TextBox Name="textBox23">
-                                <Location>456px, 136px</Location>
-                                <Size>224px, 16px</Size>
-                                <Value>=UCase([BranchAddress.City]) + ' UNASSIGNED'</Value>
+                                <Value>=IIf([OrganizationContact.FullName]&lt;&gt; null, [OrganizationContact.FullName] + '{br}','')#010;+IIf([CompanyAddress.AddressLine1]&lt;&gt; null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2]&lt;&gt;null,[CompanyAddress.AddressLine2] + '{br}','')#010;+IIf([CompanyAddress.City]&lt;&gt;null, [CompanyAddress.City],'')#010;+IIf([CompanyAddress.City]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([CompanyAddress.State]&lt;&gt;null,[CompanyAddress.State],'')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null,[CompanyAddress.PostalCode],'')#010;+'{br}'#010;+IIf([OrganizationContact.Phone1] &lt;&gt;null,'Phone: ' + [OrganizationContact.Phone1]+ '{br}','')#010;+IIf([OrganizationContact.Fax] &lt;&gt;null,'Fax: ' + [OrganizationContact.Fax]+ '{br}','')#010;+IIf([SOShipLine.OrigOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC',#010;'Web: www.waldomapac.com',#010;IIF([SOShipLine.OrigOrderType] = 'SO' And [Organization.OrganizationCD] = 'CHINA',#010;'Web: www.waldomchina.com','Web: '))</Value>
                             </TextBox>
                             <TextBox Name="textBox29">
                                 <Location>376px, 0px</Location>
@@ -5683,11 +5885,6 @@
                                 </Style>
                                 <Value>Page: </Value>
                             </TextBox>
-                            <TextBox Name="textBox31">
-                                <Location>456px, 152px</Location>
-                                <Size>224px, 16px</Size>
-                                <Value>=[BranchContact.EMail]</Value>
-                            </TextBox>
                             <TextBox Name="textBox39">
                                 <Location>32px, 392px</Location>
                                 <Size>88px, 16px</Size>
@@ -5697,21 +5894,6 @@
                                     </Font>
                                 </Style>
                                 <Value>Waldom SO#:</Value>
-                            </TextBox>
-                            <TextBox Name="textBox43">
-                                <Location>376px, 152px</Location>
-                                <Size>80px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                </Style>
-                                <Value>Email: </Value>
-                            </TextBox>
-                            <TextBox Name="textBox45">
-                                <Location>80px, 152px</Location>
-                                <Size>120px, 16px</Size>
-                                <Value>***SALES COPY***</Value>
                             </TextBox>
                             <TextBox Name="textBox46">
                                 <Location>80px, 184px</Location>
@@ -5847,7 +6029,7 @@
                             </TextBox>
                             <TextBox Name="textBox67">
                                 <Location>368px, 424px</Location>
-                                <Size>96px, 16px</Size>
+                                <Size>40px, 16px</Size>
                                 <Style>
                                     <Font>
                                         <Style>Bold</Style>
@@ -5856,7 +6038,7 @@
                                 <Value>Terms:</Value>
                             </TextBox>
                             <TextBox Name="textBox68">
-                                <Location>464px, 424px</Location>
+                                <Location>408px, 424px</Location>
                                 <Size>168px, 16px</Size>
                                 <Value>=[SOOrder.TermsID_description]</Value>
                             </TextBox>
@@ -6200,7 +6382,7 @@
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>This certifies that Waldom Electronics Corp. is an authorized distributor of the material in this order, and that the product has been manufactured in accordance with applicable</Value>
+                                <Value>=IIF([SOLine.OrigOrderType] = 'BF',#010;'The product has been manufactured in accordance with applicable',#010;'This certifies that Waldom Electronics Corp. is an authorized distributor of the material in this order, and that the product has been manufactured in accordance with applicable')</Value>
                             </TextBox>
                             <TextBox Name="textBox22">
                                 <Location>0px, 72px</Location>
@@ -6212,7 +6394,7 @@
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>specifications as set forth by the manufacturing company. The product listed on this Packing List is traceable back to the purchase order that Waldom received it under.</Value>
+                                <Value>=IIF([SOLine.OrigOrderType] = 'BF',#010;'specifications as set forth by the manufacturing company.',#010;'specifications as set forth by the manufacturing company. The product listed on this Packing List is traceable back to the purchase order that Waldom received it under.')</Value>
                             </TextBox>
                             <TextBox Name="textBox24">
                                 <Location>128px, 88px</Location>
@@ -6224,7 +6406,7 @@
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>Director of Quality</Value>
+                                <Value>=IIF([SOLine.OrigOrderType] = 'BF','','Director of Quality')</Value>
                             </TextBox>
                             <TextBox Name="textBox25">
                                 <Location>0px, 120px</Location>
@@ -6236,36 +6418,27 @@
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>The goods included with this order are sold subject to the Seller's Terms and Conditions, which can be found at www.waldom.com/terms.</Value>
+                                <Value>The goods included with this order are sold subject to the Seller's Terms and Conditions</Value>
                             </TextBox>
                             <TextBox Name="textBox35">
                                 <Format>='MM/dd/yy'</Format>
-                                <Location>296px, 0px</Location>
+                                <Location>96px, 0px</Location>
                                 <Size>96px, 16px</Size>
                                 <Value>=[SOShipment.ShipDate]</Value>
                             </TextBox>
                             <TextBox Name="textBox36">
-                                <Location>448px, 0px</Location>
+                                <Location>16px, 16px</Location>
                                 <Size>88px, 16px</Size>
                                 <Value>TRACKING #:</Value>
                             </TextBox>
                             <TextBox Name="textBox38">
-                                <Location>536px, 0px</Location>
-                                <Size>160px, 16px</Size>
+                                <CanGrow>True</CanGrow>
+                                <Location>104px, 16px</Location>
+                                <Size>536px, 16px</Size>
                                 <Value>=[SOShipment.AttributeTRACKNBR]</Value>
                             </TextBox>
-                            <TextBox Name="textBox6">
-                                <Location>0px, 0px</Location>
-                                <Size>88px, 16px</Size>
-                                <Value># PACKAGES: </Value>
-                            </TextBox>
-                            <TextBox Name="textBox7">
-                                <Location>88px, 0px</Location>
-                                <Size>80px, 16px</Size>
-                                <Value>(Blank temp)</Value>
-                            </TextBox>
                             <TextBox Name="textBox8">
-                                <Location>216px, 0px</Location>
+                                <Location>16px, 0px</Location>
                                 <Size>80px, 16px</Size>
                                 <Value>SHIP DATE: </Value>
                             </TextBox>
@@ -6283,7 +6456,7 @@
                     </GroupExp>
                 </Grouping>
                 <Headers>
-                    <Header Name="groupHeaderSection1_b1a">
+                    <Header Name="groupHeaderSection3">
                         <Height>0.33333in</Height>
                         <Items>
                             <TextBox Name="textBox4">
@@ -6381,7 +6554,7 @@
                     </Header>
                 </Headers>
                 <Footers>
-                    <Footer Name="groupFooterSection1_446">
+                    <Footer Name="groupFooterSection2">
                         <Height>0cm</Height>
                         <Visible>False</Visible>
                     </Footer>

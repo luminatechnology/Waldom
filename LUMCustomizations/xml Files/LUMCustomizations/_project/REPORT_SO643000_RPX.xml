@@ -1,5 +1,5 @@
 ﻿<Report Name="so643000.rpx">
-    <Report version="20201103" Name="report1">
+    <Report version="20211215" Name="report1">
         <CommonSettings>
             <ViewPdf>True</ViewPdf>
         </CommonSettings>
@@ -25,22 +25,19 @@
                 <DataField>ARTran.LineType</DataField>
                 <Value>DS</Value>
             </FilterExp>
+            <FilterExp>
+                <Condition>NotEqual</Condition>
+                <DataField>ARTran.Qty</DataField>
+                <Value>0</Value>
+            </FilterExp>
         </Filters>
         <LayoutUnit>Inch</LayoutUnit>
         <Locale>=[Customer.LocaleName]</Locale>
         <MailSettings>
             <ActivitySource>ARInvoice.NoteID</ActivitySource>
-            <Bcc>
-            </Bcc>
             <Body>='Dear Customer,#010;#010;This is an automatic email to notify you that you have a new Invoice available on your account.  #010;You will find a copy of'+' '+[ARInvoice.PrintDocType]+' '+'#'+' '+[ARInvoice.RefNbr]+' '+'attached to this email.  #010;#010;If you have any questions, please don’t hesitate to contact us at Email.  #010;#010;Thank you for choosing'+' '+[CompanyContact.FullName]+'.'#010;</Body>
-            <Cc>
-            </Cc>
-            <Format>
-            </Format>
             <ParentSource>Customer.NoteID</ParentSource>
             <Subject>=[CompanyContact.FullName]+' '+[ARInvoice.PrintDocType]+' '+'#'+' '+[ARInvoice.RefNbr]</Subject>
-            <TemplateID>
-            </TemplateID>
             <To>=IsNull([BillingContact.EMail],'')</To>
         </MailSettings>
         <PageSettings>
@@ -88,11 +85,6 @@
                 <Prompt>Reference Number</Prompt>
                 <Required>True</Required>
                 <ViewName>=Report.GetFieldSchema('SOInvoicePrintFormFilter.RefNbr,DocType')</ViewName>
-            </ReportParameter>
-            <ReportParameter>
-                <DefaultValue>SGD</DefaultValue>
-                <Name>CurySGD</Name>
-                <Visible>False</Visible>
             </ReportParameter>
         </Parameters>
         <Relations>
@@ -267,10 +259,6 @@
                         <ChildField>ContactID</ChildField>
                         <ParentField>DefContactID</ParentField>
                     </RelationRow>
-                    <RelationRow>
-                        <ChildField>BAccountID</ChildField>
-                        <ParentField>BAccountID</ParentField>
-                    </RelationRow>
                 </Links>
                 <ParentName>BAccount</ParentName>
             </ReportRelation>
@@ -443,39 +431,42 @@
                 <ParentName>ARTran</ParentName>
             </ReportRelation>
             <ReportRelation>
-                <ChildName>CurrencyInfo</ChildName>
+                <ChildName>SOFreightDetail</ChildName>
                 <Links>
                     <RelationRow>
-                        <ChildField>CuryInfoID</ChildField>
-                        <ParentField>CuryInfoID</ParentField>
+                        <ChildField>OrderType</ChildField>
+                        <ParentField>OrderType</ParentField>
+                    </RelationRow>
+                    <RelationRow>
+                        <ChildField>OrderNbr</ChildField>
+                        <ParentField>OrderNbr</ParentField>
+                    </RelationRow>
+                </Links>
+                <ParentName>SOOrder</ParentName>
+            </ReportRelation>
+            <ReportRelation>
+                <ChildName>ARTaxTran</ChildName>
+                <Links>
+                    <RelationRow>
+                        <ChildField>RefNbr</ChildField>
+                        <ParentField>RefNbr</ParentField>
                     </RelationRow>
                 </Links>
                 <ParentName>ARInvoice</ParentName>
             </ReportRelation>
             <ReportRelation>
-                <ChildName>CurrencyRate</ChildName>
+                <ChildAlias>OrganizeContact</ChildAlias>
+                <ChildName>Contact</ChildName>
                 <Links>
                     <RelationRow>
-                        <ChildField>CuryRateType</ChildField>
-                        <ParentField>CuryRateTypeID</ParentField>
-                    </RelationRow>
-                    <RelationRow>
-                        <ChildField>ToCuryID</ChildField>
-                        <ParentField>BaseCuryID</ParentField>
-                    </RelationRow>
-                    <RelationRow>
-                        <ChildField>CuryEffDate</ChildField>
-                        <ParentField>CuryEffDate</ParentField>
-                    </RelationRow>
-                    <RelationRow>
-                        <ChildField>@CurySGD</ChildField>
-                        <ParentField>CurrencyRate.FromCuryID</ParentField>
+                        <ChildField>ContactID</ChildField>
+                        <ParentField>DefContactID</ParentField>
                     </RelationRow>
                 </Links>
-                <ParentName>CurrencyInfo</ParentName>
+                <ParentName>OrganizationBAccount</ParentName>
             </ReportRelation>
         </Relations>
-        <SchemaUrl>http://localhost/AcumaticaWaldom/</SchemaUrl>
+        <SchemaUrl>https://waldomelectronics.acumatica.com/</SchemaUrl>
         <Sorting>
             <SortExp>
                 <DataField>ARTran.SortOrder</DataField>
@@ -8062,65 +8053,16 @@
                 </Fields>
                 <FullName>PX.Objects.SO.SOShipment</FullName>
             </ReportTable>
-            <ReportTable Name="CurrencyInfo">
+            <ReportTable Name="SOFreightDetail">
                 <Fields>
-                    <ReportField Name="BaseCalc">
-                        <DataType>Boolean</DataType>
+                    <ReportField Name="AccountID">
                     </ReportField>
-                    <ReportField Name="BaseCuryID">
+                    <ReportField Name="AccountID_Account_description">
                     </ReportField>
-                    <ReportField Name="BasePrecision">
-                        <DataType>Int16</DataType>
+                    <ReportField Name="AccountID_description">
                     </ReportField>
-                    <ReportField Name="CuryEffDate">
-                        <DataType>DateTime</DataType>
+                    <ReportField Name="AccountID_Segment1">
                     </ReportField>
-                    <ReportField Name="CuryEffDate_Day">
-                    </ReportField>
-                    <ReportField Name="CuryEffDate_Hour">
-                    </ReportField>
-                    <ReportField Name="CuryEffDate_Month">
-                    </ReportField>
-                    <ReportField Name="CuryEffDate_Quarter">
-                    </ReportField>
-                    <ReportField Name="CuryID">
-                    </ReportField>
-                    <ReportField Name="CuryInfoID">
-                        <DataType>Int64</DataType>
-                    </ReportField>
-                    <ReportField Name="CuryMultDiv">
-                    </ReportField>
-                    <ReportField Name="CuryPrecision">
-                        <DataType>Int16</DataType>
-                    </ReportField>
-                    <ReportField Name="CuryRate">
-                        <DataType>Decimal</DataType>
-                    </ReportField>
-                    <ReportField Name="CuryRateTypeID">
-                    </ReportField>
-                    <ReportField Name="DisplayCuryID">
-                    </ReportField>
-                    <ReportField Name="IsReadOnly">
-                        <DataType>Boolean</DataType>
-                    </ReportField>
-                    <ReportField Name="ModuleCode">
-                    </ReportField>
-                    <ReportField Name="RecipRate">
-                        <DataType>Decimal</DataType>
-                    </ReportField>
-                    <ReportField Name="SampleCuryRate">
-                        <DataType>Decimal</DataType>
-                    </ReportField>
-                    <ReportField Name="SampleRecipRate">
-                        <DataType>Decimal</DataType>
-                    </ReportField>
-                    <ReportField Name="tstamp">
-                    </ReportField>
-                </Fields>
-                <FullName>PX.Objects.CM.CurrencyInfo</FullName>
-            </ReportTable>
-            <ReportTable Name="CurrencyRate">
-                <Fields>
                     <ReportField Name="CreatedByID">
                     </ReportField>
                     <ReportField Name="CreatedByID_Creator_displayName">
@@ -8142,32 +8084,37 @@
                     </ReportField>
                     <ReportField Name="CreatedDateTime_Quarter">
                     </ReportField>
-                    <ReportField Name="CuryEffDate">
-                        <DataType>DateTime</DataType>
+                    <ReportField Name="CuryFreightAmt">
+                        <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="CuryEffDate_Day">
+                    <ReportField Name="CuryFreightCost">
+                        <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="CuryEffDate_Hour">
+                    <ReportField Name="CuryInfoID">
+                        <DataType>Int64</DataType>
                     </ReportField>
-                    <ReportField Name="CuryEffDate_Month">
+                    <ReportField Name="CuryLineTotal">
+                        <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="CuryEffDate_Quarter">
-                    </ReportField>
-                    <ReportField Name="CuryMultDiv">
+                    <ReportField Name="CuryPremiumFreightAmt">
+                        <DataType>Decimal</DataType>
                     </ReportField>
                     <ReportField Name="CuryRate">
                         <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="CuryRateID">
-                        <DataType>Int32</DataType>
+                    <ReportField Name="CuryTotalFreightAmt">
+                        <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="CuryRateType">
+                    <ReportField Name="CuryViewState">
+                        <DataType>Boolean</DataType>
                     </ReportField>
-                    <ReportField Name="CuryRateType_CurrencyRateType_descr">
+                    <ReportField Name="DocType">
                     </ReportField>
-                    <ReportField Name="CuryRateType_description">
+                    <ReportField Name="FreightAmt">
+                        <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="FromCuryID">
+                    <ReportField Name="FreightCost">
+                        <DataType>Decimal</DataType>
                     </ReportField>
                     <ReportField Name="LastModifiedByID">
                     </ReportField>
@@ -8190,15 +8137,402 @@
                     </ReportField>
                     <ReportField Name="LastModifiedDateTime_Quarter">
                     </ReportField>
-                    <ReportField Name="RateReciprocal">
+                    <ReportField Name="LineTotal">
                         <DataType>Decimal</DataType>
                     </ReportField>
-                    <ReportField Name="ToCuryID">
+                    <ReportField Name="NoteActivity">
+                    </ReportField>
+                    <ReportField Name="NoteFiles">
+                    </ReportField>
+                    <ReportField Name="NoteID">
+                        <DataType>Object</DataType>
+                    </ReportField>
+                    <ReportField Name="NoteImages">
+                    </ReportField>
+                    <ReportField Name="NoteText">
+                    </ReportField>
+                    <ReportField Name="OrderNbr">
+                    </ReportField>
+                    <ReportField Name="OrderType">
+                    </ReportField>
+                    <ReportField Name="OrderVolume">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="OrderWeight">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="PackageWeight">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="PremiumFreightAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ProjectID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="RefNbr">
+                    </ReportField>
+                    <ReportField Name="ShipmentNbr">
+                    </ReportField>
+                    <ReportField Name="ShipmentType">
+                    </ReportField>
+                    <ReportField Name="ShipTermsID">
+                    </ReportField>
+                    <ReportField Name="ShipVia">
+                    </ReportField>
+                    <ReportField Name="ShipVia_Carrier_description">
+                    </ReportField>
+                    <ReportField Name="ShipVia_description">
+                    </ReportField>
+                    <ReportField Name="ShipZoneID">
+                    </ReportField>
+                    <ReportField Name="ShipZoneID_description">
+                    </ReportField>
+                    <ReportField Name="ShipZoneID_ShippingZone_description">
+                    </ReportField>
+                    <ReportField Name="SubID">
+                    </ReportField>
+                    <ReportField Name="SubID_description">
+                    </ReportField>
+                    <ReportField Name="SubID_Segment1">
+                    </ReportField>
+                    <ReportField Name="SubID_Segment2">
+                    </ReportField>
+                    <ReportField Name="SubID_Sub_description">
+                    </ReportField>
+                    <ReportField Name="TaskID">
+                    </ReportField>
+                    <ReportField Name="TaskID_description">
+                    </ReportField>
+                    <ReportField Name="TaskID_PMTask_description">
+                    </ReportField>
+                    <ReportField Name="TaskID_Segment1">
+                    </ReportField>
+                    <ReportField Name="TaxCategoryID">
+                    </ReportField>
+                    <ReportField Name="TaxCategoryID_description">
+                    </ReportField>
+                    <ReportField Name="TaxCategoryID_TaxCategory_descr">
+                    </ReportField>
+                    <ReportField Name="TotalFreightAmt">
+                        <DataType>Decimal</DataType>
                     </ReportField>
                     <ReportField Name="tstamp">
                     </ReportField>
+                    <ReportField Name="Volume">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="Weight">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
                 </Fields>
-                <FullName>PX.Objects.CM.CurrencyRate</FullName>
+                <FullName>PX.Objects.SO.SOFreightDetail</FullName>
+            </ReportTable>
+            <ReportTable Name="ARTaxTran">
+                <Fields>
+                    <ReportField Name="AccountID">
+                    </ReportField>
+                    <ReportField Name="AccountID_Account_description">
+                    </ReportField>
+                    <ReportField Name="AccountID_description">
+                    </ReportField>
+                    <ReportField Name="AccountID_Segment1">
+                    </ReportField>
+                    <ReportField Name="AdjdDocType">
+                    </ReportField>
+                    <ReportField Name="AdjdRefNbr">
+                    </ReportField>
+                    <ReportField Name="AdjNbr">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="BAccountID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="BranchID">
+                    </ReportField>
+                    <ReportField Name="BranchID_Branch_acctName">
+                    </ReportField>
+                    <ReportField Name="BranchID_description">
+                    </ReportField>
+                    <ReportField Name="BranchID_Segment1">
+                    </ReportField>
+                    <ReportField Name="CreatedByID">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_displayName">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_Username">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_description">
+                    </ReportField>
+                    <ReportField Name="CreatedByScreenID">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="CuryDiscountedPrice">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryDiscountedTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryEffDate">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryExemptedAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryExpenseAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryID">
+                    </ReportField>
+                    <ReportField Name="CuryInfoID">
+                        <DataType>Int64</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryOrigTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryRetainedTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryRetainedTaxAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryRetainedTaxAmtSumm">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryTaxableDiscountAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryTaxAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryTaxAmtSumm">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="CuryTaxDiscountAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="Description">
+                    </ReportField>
+                    <ReportField Name="DiscountedPrice">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="DiscountedTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ExemptedAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ExpenseAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="FinDate">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="FinDate_Day">
+                    </ReportField>
+                    <ReportField Name="FinDate_Hour">
+                    </ReportField>
+                    <ReportField Name="FinDate_Month">
+                    </ReportField>
+                    <ReportField Name="FinDate_Quarter">
+                    </ReportField>
+                    <ReportField Name="FinPeriodID">
+                    </ReportField>
+                    <ReportField Name="JurisName">
+                    </ReportField>
+                    <ReportField Name="JurisType">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_description">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_displayName">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_Username">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByScreenID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="LineNbr">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="LineRefNbr">
+                    </ReportField>
+                    <ReportField Name="Module">
+                    </ReportField>
+                    <ReportField Name="NonDeductibleTaxRate">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="OrigRefNbr">
+                    </ReportField>
+                    <ReportField Name="OrigTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="OrigTranType">
+                    </ReportField>
+                    <ReportField Name="RecordID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="RefNbr">
+                    </ReportField>
+                    <ReportField Name="Released">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="ReportCuryEffDate">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="ReportCuryEffDate_Day">
+                    </ReportField>
+                    <ReportField Name="ReportCuryEffDate_Hour">
+                    </ReportField>
+                    <ReportField Name="ReportCuryEffDate_Month">
+                    </ReportField>
+                    <ReportField Name="ReportCuryEffDate_Quarter">
+                    </ReportField>
+                    <ReportField Name="ReportCuryID">
+                    </ReportField>
+                    <ReportField Name="ReportCuryMultDiv">
+                    </ReportField>
+                    <ReportField Name="ReportCuryRate">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ReportCuryRateTypeID">
+                    </ReportField>
+                    <ReportField Name="ReportCuryRateTypeID_CurrencyRateType_descr">
+                    </ReportField>
+                    <ReportField Name="ReportCuryRateTypeID_description">
+                    </ReportField>
+                    <ReportField Name="ReportExemptedAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ReportTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="ReportTaxAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="RetainedTaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="RetainedTaxAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="RetainedTaxAmtSumm">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="RevisionID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="Selected">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="SubID">
+                    </ReportField>
+                    <ReportField Name="SubID_description">
+                    </ReportField>
+                    <ReportField Name="SubID_Segment1">
+                    </ReportField>
+                    <ReportField Name="SubID_Segment2">
+                    </ReportField>
+                    <ReportField Name="SubID_Sub_description">
+                    </ReportField>
+                    <ReportField Name="TaxableAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxableDiscountAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxableQty">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxAmtSumm">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxBucketID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxDiscountAmt">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxID">
+                    </ReportField>
+                    <ReportField Name="TaxID_description">
+                    </ReportField>
+                    <ReportField Name="TaxID_Tax_descr">
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceDate">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceDate_Day">
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceDate_Hour">
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceDate_Month">
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceDate_Quarter">
+                    </ReportField>
+                    <ReportField Name="TaxInvoiceNbr">
+                    </ReportField>
+                    <ReportField Name="TaxPeriodID">
+                    </ReportField>
+                    <ReportField Name="TaxRate">
+                        <DataType>Decimal</DataType>
+                    </ReportField>
+                    <ReportField Name="TaxType">
+                    </ReportField>
+                    <ReportField Name="TaxUOM">
+                    </ReportField>
+                    <ReportField Name="TaxZoneID">
+                    </ReportField>
+                    <ReportField Name="TranDate">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="TranDate_Day">
+                    </ReportField>
+                    <ReportField Name="TranDate_Hour">
+                    </ReportField>
+                    <ReportField Name="TranDate_Month">
+                    </ReportField>
+                    <ReportField Name="TranDate_Quarter">
+                    </ReportField>
+                    <ReportField Name="TranType">
+                    </ReportField>
+                    <ReportField Name="tstamp">
+                    </ReportField>
+                    <ReportField Name="VendorID">
+                        <DataType>Int32</DataType>
+                    </ReportField>
+                    <ReportField Name="Voided">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                </Fields>
+                <FullName>PX.Objects.AR.ARTaxTran</FullName>
             </ReportTable>
         </Tables>
         <Version>20220419</Version>
@@ -8322,11 +8656,12 @@
         </ViewerFields>
         <Sections>
             <PageHeader Name="pageHeaderSection1">
+                <Expanded>False</Expanded>
                 <Height>0.08333in</Height>
                 <Visible>False</Visible>
             </PageHeader>
             <Detail Name="detailSection1">
-                <Height>0.91667in</Height>
+                <Height>0.75in</Height>
                 <Variables>
                     <ReportVariable>
                         <Name>LineNbr</Name>
@@ -8340,28 +8675,18 @@
                         <Size>72px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                         </Style>
                         <Value>=[SOShipLine.ShippedQty]</Value>
                     </TextBox>
-                    <TextBox Name="textBox15">
-                        <Location>64px, 56px</Location>
-                        <Size>216px, 16px</Size>
-                        <Style>
-                            <Font>
-                                <Name>Microsoft JhengHei</Name>
-                            </Font>
-                        </Style>
-                        <Value>=IsNull([SOOrder.ShipVia_description], '')</Value>
-                    </TextBox>
                     <TextBox Name="textBox66">
-                        <Location>280px, 32px</Location>
-                        <Size>416px, 16px</Size>
+                        <Location>296px, 32px</Location>
+                        <Size>400px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
                             <Padding>
                                 <Left>3px</Left>
@@ -8375,30 +8700,30 @@
                         <Size>80px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                         </Style>
                         <Value>=[ARTran.CuryTranAmt]</Value>
                     </TextBox>
                     <TextBox Name="textBox68">
-                        <Format>#,##0.00;-#,##0.00</Format>
+                        <Format>='#,##0.00000'</Format>
                         <Location>544px, 0px</Location>
                         <Size>72px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                         </Style>
                         <Value>=[ARTran.CuryUnitPrice]</Value>
                     </TextBox>
                     <TextBox Name="textBox69">
-                        <Location>280px, 16px</Location>
-                        <Size>416px, 16px</Size>
+                        <Location>296px, 16px</Location>
+                        <Size>400px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
                             <Padding>
                                 <Left>3px</Left>
@@ -8411,33 +8736,34 @@
                         <Size>64px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
                             <TextAlign>Center</TextAlign>
                         </Style>
                         <Value>=[InventoryItem.ItemClassID]</Value>
                     </TextBox>
                     <TextBox Name="textBox71">
-                        <Location>280px, 0px</Location>
-                        <Size>200px, 16px</Size>
+                        <CanGrow>True</CanGrow>
+                        <Location>296px, 0px</Location>
+                        <Size>184px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
                             <Padding>
                                 <Left>3px</Left>
                             </Padding>
                         </Style>
-                        <Value>=[ARTran.InventoryID]</Value>
+                        <Value>=[ARTran.InventoryID]+#010;IIF([SOLine.AlternateID] &lt;&gt; Null, '{br}' + 'CrossPN: ' + [SOLine.AlternateID] + '{br}','')</Value>
                     </TextBox>
                     <TextBox Name="textBox72">
                         <Location>136px, 0px</Location>
                         <Size>72px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                         </Style>
                         <Value>=[SOLine.OpenQty]</Value>
                     </TextBox>
@@ -8446,9 +8772,9 @@
                         <Size>80px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
-                            <TextAlign>Center</TextAlign>
+                            <TextAlign>Right</TextAlign>
                         </Style>
                         <Value>=[ARTran.Qty]</Value>
                     </TextBox>
@@ -8457,27 +8783,17 @@
                         <Size>56px, 16px</Size>
                         <Style>
                             <Font>
-                                <Name>Microsoft JhengHei</Name>
+                                <Name>Microsoft JhengHei UI</Name>
                             </Font>
                             <TextAlign>Center</TextAlign>
                         </Style>
-                        <Value>=$LineNbr</Value>
-                    </TextBox>
-                    <TextBox Name="textBox86">
-                        <Location>8px, 56px</Location>
-                        <Size>56px, 16px</Size>
-                        <Style>
-                            <Font>
-                                <Name>Microsoft JhengHei</Name>
-                                <Style>Bold</Style>
-                            </Font>
-                        </Style>
-                        <Value>Ship Via : </Value>
+                        <Value>=PadLeft($LineNbr,4,'0')</Value>
                     </TextBox>
                 </Items>
             </Detail>
             <PageFooter Name="pageFooterSection1">
-                <Height>0.08333in</Height>
+                <ExcelVisible>False</ExcelVisible>
+                <Height>0px</Height>
             </PageFooter>
         </Sections>
         <Items />
@@ -8493,8 +8809,7 @@
                 </Grouping>
                 <Headers>
                     <Header Name="groupHeaderSection1">
-                        <Height>3.91667in</Height>
-                        <PrintForEmptyGroup>True</PrintForEmptyGroup>
+                        <Height>4.08333in</Height>
                         <PrintOnEveryPage>True</PrintOnEveryPage>
                         <Items>
                             <PictureBox Name="pictureBox1">
@@ -8505,7 +8820,7 @@
                                 <Source>Database</Source>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=[Organization.LogoNameReport]</Value>
@@ -8524,7 +8839,7 @@
                                         <Left>1px</Left>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8536,34 +8851,67 @@
                                 <Value>Customer#: </Value>
                             </TextBox>
                             <TextBox Name="textBox10">
-                                <Location>16px, 152px</Location>
+                                <Location>16px, 104px</Location>
                                 <Size>320px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
-                                <Value>='Fax: ' + IsNull([CompanyContact.Fax], '')</Value>
+                                <Value>=IsNull([OrganizationBAccount.LegalName], '')</Value>
                             </TextBox>
                             <TextBox Name="textBox11">
-                                <Location>16px, 136px</Location>
-                                <Size>320px, 16px</Size>
+                                <Location>344px, 376px</Location>
+                                <Size>352px, 16px</Size>
                                 <Style>
+                                    <BorderColor>
+                                        <Bottom>Black</Bottom>
+                                        <Right>Black</Right>
+                                    </BorderColor>
+                                    <BorderStyle>
+                                        <Bottom>Solid</Bottom>
+                                        <Right>Solid</Right>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Bottom>1px</Bottom>
+                                        <Right>1px</Right>
+                                    </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                        <Style>Bold</Style>
                                     </Font>
                                 </Style>
-                                <Value>='Phone: ' + IsNull([CompanyContact.Phone1], '')</Value>
+                                <Value>='Currency of Settlement : '+IsNull([ARInvoice.CuryID], '')</Value>
                             </TextBox>
                             <TextBox Name="textBox13">
+                                <CanGrow>True</CanGrow>
                                 <Location>16px, 120px</Location>
                                 <Size>320px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
-                                <Value>=IIf([CompanyAddress.AddressLine2] &lt;&gt; Null, [CompanyAddress.AddressLine2] + ' ', '')#010;+IIf([CompanyAddress.City] &lt;&gt; Null, [CompanyAddress.City] + ' ', '')#010;+IIf([CompanyAddress.State] &lt;&gt; Null, [CompanyAddress.State] + ' ', '')#010;+IIf([CompanyAddress.CountryID] &lt;&gt; Null, [CompanyAddress.CountryID] + ' ', '')#010;+IIf([CompanyAddress.PostalCode] &lt;&gt; Null, [CompanyAddress.PostalCode], '')</Value>
+                                <Value>=IIf([CompanyAddress.AddressLine1] &lt;&gt; Null, [CompanyAddress.AddressLine1] + ' ', '')#010;+IIf([CompanyAddress.AddressLine2] &lt;&gt; Null, [CompanyAddress.AddressLine2] + ' ', '')#010;+IIf([CompanyAddress.City] &lt;&gt; Null, [CompanyAddress.City] + ' ', '')#010;+IIf([CompanyAddress.State] &lt;&gt; Null, [CompanyAddress.State] + ' ', '')#010;+IIf([CompanyAddress.CountryID] &lt;&gt; Null, [CompanyAddress.CountryID] + ' ', '')#010;+IIf([CompanyAddress.PostalCode] &lt;&gt; Null, [CompanyAddress.PostalCode], '')</Value>
+                            </TextBox>
+                            <TextBox Name="textBox15">
+                                <Location>56px, 376px</Location>
+                                <Size>288px, 16px</Size>
+                                <Style>
+                                    <BorderColor>
+                                        <Bottom>Black</Bottom>
+                                    </BorderColor>
+                                    <BorderStyle>
+                                        <Bottom>Solid</Bottom>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Bottom>1px</Bottom>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                    </Font>
+                                </Style>
+                                <Value>=IsNull([SOOrder.ShipVia_description], '')</Value>
                             </TextBox>
                             <TextBox Name="textBox16">
                                 <Location>344px, 328px</Location>
@@ -8576,7 +8924,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
@@ -8595,7 +8943,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8609,7 +8957,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IIf([ShippingAddress.City] &lt;&gt; Null, [ShippingAddress.City], '')#010;+IIf([ShippingAddress.State] &lt;&gt; Null, ' ' + [ShippingAddress.State], '')#010;+IIf([ShippingAddress.PostalCode] &lt;&gt; Null, ' ' + [ShippingAddress.PostalCode], '')</Value>
@@ -8619,7 +8967,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([ShippingAddress.AddressLine1], '')</Value>
@@ -8638,7 +8986,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8653,7 +9001,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IIf([ShippingAddress.CountryID] &lt;&gt; Null, [ShippingAddress.CountryID], '')#010;+IIf([ShippingAddress.CountryID_description] &lt;&gt; Null, ' ' + [ShippingAddress.CountryID_description], '')</Value>
@@ -8663,7 +9011,7 @@
                                 <Size>112px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
@@ -8680,7 +9028,7 @@
                                         <Left>1px</Left>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8700,7 +9048,7 @@
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([SalesPersonContact.Phone1], '')</Value>
@@ -8714,11 +9062,10 @@
                                         <Left>Solid</Left>
                                     </BorderStyle>
                                     <BorderWidth>
-                                        <Bottom>1px</Bottom>
                                         <Left>1px</Left>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8734,11 +9081,8 @@
                                     <BorderStyle>
                                         <Bottom>Solid</Bottom>
                                     </BorderStyle>
-                                    <BorderWidth>
-                                        <Bottom>1px</Bottom>
-                                    </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
@@ -8755,7 +9099,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Left>3px</Left>
@@ -8763,22 +9107,12 @@
                                 </Style>
                                 <Value>=IsNull([ARInvoice.InvoiceNbr], '')</Value>
                             </TextBox>
-                            <TextBox Name="textBox32">
-                                <Location>16px, 104px</Location>
-                                <Size>320px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Name>Microsoft JhengHei</Name>
-                                    </Font>
-                                </Style>
-                                <Value>=IsNull([CompanyAddress.AddressLine1], '')</Value>
-                            </TextBox>
                             <TextBox Name="textBox33">
                                 <Location>376px, 232px</Location>
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IIf([ShippingContact.Attention] &lt;&gt; Null, [ShippingContact.Attention] + ' ', '')#010;+IIf([ShippingContact.Phone1] &lt;&gt; Null, [ShippingContact.Phone1], '')</Value>
@@ -8788,7 +9122,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([ShippingContact.FullName], '')</Value>
@@ -8798,7 +9132,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
@@ -8810,7 +9144,7 @@
                                 <Size>128px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([ARInvoice.DueDate], '')</Value>
@@ -8820,7 +9154,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([CustomerLocation.TaxRegistrationID], '')</Value>
@@ -8830,7 +9164,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IIf([CustomerAddress.CountryID] &lt;&gt; Null, ' ' + [CustomerAddress.CountryID], '')#010;+IIf([CustomerAddress.CountryID_description] &lt;&gt; Null, ' ' + [CustomerAddress.CountryID_description], '')</Value>
@@ -8840,7 +9174,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([CustomerAddress.PostalCode], '')</Value>
@@ -8850,7 +9184,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([CustomerAddress.AddressLine2], '')</Value>
@@ -8860,7 +9194,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([ShippingAddress.AddressLine2], '')</Value>
@@ -8870,7 +9204,7 @@
                                 <Size>296px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Left>3px</Left>
@@ -8885,11 +9219,8 @@
                                     <BorderStyle>
                                         <Bottom>Solid</Bottom>
                                     </BorderStyle>
-                                    <BorderWidth>
-                                        <Bottom>1px</Bottom>
-                                    </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Left>3px</Left>
@@ -8910,7 +9241,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([ARInvoice.SalesPersonID_description], '')</Value>
@@ -8924,11 +9255,10 @@
                                         <Right>Solid</Right>
                                     </BorderStyle>
                                     <BorderWidth>
-                                        <Bottom>1px</Bottom>
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([BillingContact.Attention], '')</Value>
@@ -8938,7 +9268,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([CustomerAddress.AddressLine1], '')</Value>
@@ -8948,7 +9278,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
                                 <Value>=IsNull([Customer.AcctName], '')</Value>
@@ -8965,7 +9295,7 @@
                                         <Left>1px</Left>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -8979,7 +9309,7 @@
                                 <Size>272px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
@@ -8999,7 +9329,7 @@
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Bottom>5px</Bottom>
@@ -9023,7 +9353,7 @@
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Right>5px</Right>
@@ -9037,33 +9367,56 @@
                                 <Size>224px, 24px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>='--- ' #010;+ IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC',#010;'TAX INVOICE',#010;'INVOICE'#010;)#010;+ ' ---'</Value>
+                                <Value>='--- ' #010;+ IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'TAX INVOICE',#010;'INVOICE'#010;)#010;+ ' ---'</Value>
                             </TextBox>
                             <TextBox Name="textBox79">
                                 <Location>16px, 88px</Location>
                                 <Size>320px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
-                                <Value>=IsNull([CompanyContact.FullName], '')</Value>
+                                <Value>=IsNull([OrganizeContact.FullName], '')</Value>
                             </TextBox>
                             <TextBox Name="textBox80">
-                                <Location>16px, 168px</Location>
+                                <Location>16px, 136px</Location>
                                 <Size>320px, 16px</Size>
                                 <Style>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                 </Style>
-                                <Value>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC',#010;'GST REG NO.: ' + [OrganizationBAccount.TaxRegistrationID],#010;'')</Value>
+                                <Value>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'GST REG NO.: ' + [OrganizationBAccount.TaxRegistrationID],#010;'')</Value>
+                            </TextBox>
+                            <TextBox Name="textBox86">
+                                <Location>0px, 376px</Location>
+                                <Size>56px, 16px</Size>
+                                <Style>
+                                    <BorderColor>
+                                        <Bottom>Black</Bottom>
+                                        <Left>Black</Left>
+                                    </BorderColor>
+                                    <BorderStyle>
+                                        <Bottom>Solid</Bottom>
+                                        <Left>Solid</Left>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Bottom>1px</Bottom>
+                                        <Left>1px</Left>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                </Style>
+                                <Value>Ship Via : </Value>
                             </TextBox>
                             <TextBox Name="textBox9">
                                 <Location>488px, 88px</Location>
@@ -9079,7 +9432,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Right>5px</Right>
@@ -9094,19 +9447,230 @@
                 </Headers>
                 <Footers>
                     <Footer Name="groupFooterSection1">
-                        <Height>0.41667in</Height>
-                        <PrintAtBottom>True</PrintAtBottom>
+                        <Height>1.91667in</Height>
                         <PrintOnEveryPage>True</PrintOnEveryPage>
                         <ResetPageNumber>True</ResetPageNumber>
                         <Items>
-                            <TextBox Name="textBox6">
-                                <Location>0px, 0px</Location>
-                                <Size>696px, 40px</Size>
+                            <Panel Name="panel1">
+                                <Location>432px, 0px</Location>
+                                <Size>256px, 120px</Size>
+                                <VisibleExpr>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC', True, False)</VisibleExpr>
+                                <Items>
+                                    <TextBox Name="textBox48">
+                                        <Location>120px, 8px</Location>
+                                        <Size>128px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Right>Solid</Right>
+                                                <Top>Solid</Top>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Right>1px</Right>
+                                                <Top>1px</Top>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                            </Font>
+                                            <Padding>
+                                                <Right>5px</Right>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                            <TextAlign>Right</TextAlign>
+                                        </Style>
+                                        <Value>='1USD = ' + IsNull([ARInvoice.CuryRate], '') + ' SGD'</Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox49">
+                                        <Location>8px, 8px</Location>
+                                        <Size>112px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Left>Solid</Left>
+                                                <Top>Solid</Top>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Left>1px</Left>
+                                                <Top>1px</Top>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                                <Style>Bold</Style>
+                                            </Font>
+                                            <Padding>
+                                                <Left>5px</Left>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                        </Style>
+                                        <Value>Exchange Rate : </Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox50">
+                                        <Location>120px, 32px</Location>
+                                        <Size>128px, 32px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Right>Solid</Right>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Right>1px</Right>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                            </Font>
+                                            <Padding>
+                                                <Right>5px</Right>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                            <TextAlign>Right</TextAlign>
+                                        </Style>
+                                        <Value>=[ARInvoice.CuryLineTotal] + ')'</Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox51">
+                                        <Location>8px, 32px</Location>
+                                        <Size>112px, 32px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Left>Solid</Left>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Left>1px</Left>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                                <Style>Bold</Style>
+                                            </Font>
+                                            <Padding>
+                                                <Left>5px</Left>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                        </Style>
+                                        <Value>(SGD Sub-Total: </Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox54">
+                                        <Location>120px, 64px</Location>
+                                        <Size>128px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Right>Solid</Right>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Right>1px</Right>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                            </Font>
+                                            <Padding>
+                                                <Right>5px</Right>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                            <TextAlign>Right</TextAlign>
+                                        </Style>
+                                        <Value>=IsNull([ARInvoice.CuryTaxTotal], '') + ')'</Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox55">
+                                        <Location>8px, 64px</Location>
+                                        <Size>112px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Left>Solid</Left>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Left>1px</Left>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                                <Style>Bold</Style>
+                                            </Font>
+                                            <Padding>
+                                                <Left>5px</Left>
+                                                <Top>5px</Top>
+                                            </Padding>
+                                        </Style>
+                                        <Value>(add GST @7%</Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox63">
+                                        <Location>8px, 88px</Location>
+                                        <Size>112px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Bottom>Solid</Bottom>
+                                                <Left>Solid</Left>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Bottom>1px</Bottom>
+                                                <Left>1px</Left>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                                <Style>Bold</Style>
+                                            </Font>
+                                            <Padding>
+                                                <Bottom>5px</Bottom>
+                                                <Left>5px</Left>
+                                            </Padding>
+                                        </Style>
+                                        <Value>(SGD Total: </Value>
+                                    </TextBox>
+                                    <TextBox Name="textBox81">
+                                        <Location>120px, 88px</Location>
+                                        <Size>128px, 24px</Size>
+                                        <Style>
+                                            <BackColor>Silver</BackColor>
+                                            <BorderStyle>
+                                                <Bottom>Solid</Bottom>
+                                                <Right>Solid</Right>
+                                            </BorderStyle>
+                                            <BorderWidth>
+                                                <Bottom>1px</Bottom>
+                                                <Right>1px</Right>
+                                            </BorderWidth>
+                                            <Font>
+                                                <Name>Microsoft JhengHei UI</Name>
+                                            </Font>
+                                            <Padding>
+                                                <Bottom>5px</Bottom>
+                                                <Right>5px</Right>
+                                            </Padding>
+                                            <TextAlign>Right</TextAlign>
+                                        </Style>
+                                        <Value>=[ARInvoice.CuryOrigDocAmt] + ')'</Value>
+                                    </TextBox>
+                                </Items>
+                            </Panel>
+                            <TextBox Name="textBox38">
+                                <Location>0px, 136px</Location>
+                                <Size>120px, 16px</Size>
                                 <Style>
-                                    <TextAlign>Center</TextAlign>
-                                    <VerticalAlign>Middle</VerticalAlign>
+                                    <Font>
+                                        <Style>Bold</Style>
+                                    </Font>
                                 </Style>
-                                <Value>='All sales are subject to the Waldom Electronics Corporation Terms and Condition, which can be found at'#010;+'{br}'#010;+IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'CHINA',#010;'http://www.waldom.com/terms/?|=8',#010;'http://www.waldomapac.com/terms/?|=8'#010;)</Value>
+                                <Value>WayBill/Tracker#: </Value>
+                            </TextBox>
+                            <TextBox Name="textBox41">
+                                <Location>0px, 152px</Location>
+                                <Size>680px, 32px</Size>
+                                <Value>=IIf([SOShipment.AttributeTRACKNBR] &lt;&gt; Null, [SOShipment.AttributeTRACKNBR],'')</Value>
+                            </TextBox>
+                            <TextBox Name="textBox44">
+                                <Location>0px, 16px</Location>
+                                <Size>416px, 112px</Size>
+                                <Value>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'Waldom Electronics Asia Pacific (S) Pte Ltd' +'{br}'#010;+'HSBC BANK USA, N.A.'+'{br}'#010;+'452 FIFTH AVENUE, BUFFALO, NY 14240, USA'+'{br}'#010;+'SWIFTBIC: MRMDUS33 Acct # 10363987000522 (USD)'+'{br}'#010;+'When paying, please send remittance details to arremittanceapac@waldom.com',#010;'WALDOM ELECTRONICS (SHANGHAI) CO., LTD' + '{br}'#010;+'HSBC BANK (CN) CO LTD, SHANGHAI BRANCH' + '{br}'#010;+'ADD: HSBC BLDG, SH IFC, 8 CENTURY AVENUE' + '{br}'#010;+'(CNY) ACCT#: 715001335001 SWIFT HSBCCNSH' + '{br}'#010;+'SHANGHAI 200120'+'{br}'#010;+'CN CHINA'+'{br}'#010;+'When paying,'+'{br}'#010;+'please send remittance details arremittanceapac@waldom.com'#010;)</Value>
+                            </TextBox>
+                            <TextBox Name="textBox47">
+                                <Location>0px, 0px</Location>
+                                <Size>120px, 16px</Size>
+                                <Style>
+                                    <Font>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                </Style>
+                                <Value>Remit To:</Value>
                             </TextBox>
                         </Items>
                     </Footer>
@@ -9127,6 +9691,7 @@
                 <Headers>
                     <Header Name="groupHeaderSection2">
                         <Height>0.84656cm</Height>
+                        <PrintOnEveryPage>True</PrintOnEveryPage>
                         <Items>
                             <TextBox Name="textBox12">
                                 <Location>0px, 0px</Location>
@@ -9147,7 +9712,7 @@
                                     <Font>
                                         <Style>Bold</Style>
                                     </Font>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
                                 <Value>Ext Value</Value>
                             </TextBox>
@@ -9159,7 +9724,7 @@
                                     <Font>
                                         <Style>Bold</Style>
                                     </Font>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
                                 <Value>Resale</Value>
                             </TextBox>
@@ -9176,8 +9741,8 @@
                                 <Value>PRC</Value>
                             </TextBox>
                             <TextBox Name="textBox25">
-                                <Location>280px, 16px</Location>
-                                <Size>200px, 16px</Size>
+                                <Location>296px, 16px</Location>
+                                <Size>184px, 16px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
                                     <Font>
@@ -9206,7 +9771,7 @@
                                     <Font>
                                         <Style>Bold</Style>
                                     </Font>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
                                 <Value>Ordered</Value>
                             </TextBox>
@@ -9242,7 +9807,7 @@
                                     <Font>
                                         <Style>Bold</Style>
                                     </Font>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
                                 <Value>B/O</Value>
                             </TextBox>
@@ -9254,20 +9819,32 @@
                                     <Font>
                                         <Style>Bold</Style>
                                     </Font>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>Shipped</Value>
+                                <Value>Shipped </Value>
+                            </TextBox>
+                            <TextBox Name="textBox84">
+                                <Location>280px, 16px</Location>
+                                <Size>16px, 16px</Size>
+                                <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <Font>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                    <TextAlign>Right</TextAlign>
+                                </Style>
                             </TextBox>
                         </Items>
                     </Header>
                 </Headers>
                 <Footers>
                     <Footer Name="groupFooterSection2">
-                        <Height>0.41667in</Height>
+                        <Height>0.33333in</Height>
                         <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD', True, False)</VisibleExpr>
                         <Items>
                             <TextBox Name="textBox35">
-                                <Location>560px, 8px</Location>
+                                <Format>='0.00'</Format>
+                                <Location>552px, 0px</Location>
                                 <Size>128px, 32px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9280,7 +9857,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Right>5px</Right>
@@ -9288,10 +9865,10 @@
                                     </Padding>
                                     <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>=[ARInvoice.CuryID] + ' ' + [ARInvoice.CuryLineTotal]</Value>
+                                <Value>=[ARInvoice.CuryLineTotal] - [SOFreightDetail.CuryTotalFreightAmt]</Value>
                             </TextBox>
                             <TextBox Name="textBox36">
-                                <Location>448px, 8px</Location>
+                                <Location>440px, 0px</Location>
                                 <Size>112px, 32px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9304,7 +9881,7 @@
                                         <Top>1px</Top>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -9317,33 +9894,12 @@
                         </Items>
                     </Footer>
                     <Footer Name="groupFooterSection3">
-                        <Height>0.33333in</Height>
-                        <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD', True, False)</VisibleExpr>
+                        <Height>0.75in</Height>
+                        <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [SOFreightDetail.CuryTotalFreightAmt] &lt;&gt; 0, True, False)</VisibleExpr>
                         <Items>
-                            <TextBox Name="textBox37">
-                                <Location>448px, 0px</Location>
-                                <Size>112px, 32px</Size>
-                                <Style>
-                                    <BackColor>Silver</BackColor>
-                                    <BorderStyle>
-                                        <Left>Solid</Left>
-                                    </BorderStyle>
-                                    <BorderWidth>
-                                        <Left>1px</Left>
-                                    </BorderWidth>
-                                    <Font>
-                                        <Name>Microsoft JhengHei</Name>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                    <Padding>
-                                        <Left>5px</Left>
-                                        <Top>5px</Top>
-                                    </Padding>
-                                </Style>
-                                <Value>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC',#010;'Add GST @7%: ',#010;'Sales Tax: '#010;)</Value>
-                            </TextBox>
-                            <TextBox Name="textBox8">
-                                <Location>560px, 0px</Location>
+                            <TextBox Name="textBox30">
+                                <Format>='0.00'</Format>
+                                <Location>552px, 24px</Location>
                                 <Size>128px, 32px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9354,7 +9910,7 @@
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Right>5px</Right>
@@ -9362,16 +9918,32 @@
                                     </Padding>
                                     <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>=[ARInvoice.CuryTaxTotal]</Value>
+                                <Value>=[ARInvoice.TaxTotal]</Value>
                             </TextBox>
-                        </Items>
-                    </Footer>
-                    <Footer Name="groupFooterSection4">
-                        <Height>0.33333in</Height>
-                        <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD', True, False)</VisibleExpr>
-                        <Items>
-                            <TextBox Name="textBox30">
-                                <Location>560px, 0px</Location>
+                            <TextBox Name="textBox31">
+                                <Location>440px, 24px</Location>
+                                <Size>112px, 32px</Size>
+                                <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <BorderStyle>
+                                        <Left>Solid</Left>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Left>1px</Left>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                    <Padding>
+                                        <Left>5px</Left>
+                                        <Top>5px</Top>
+                                    </Padding>
+                                </Style>
+                                <Value>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'Add GST @7%: ',#010;'Tax Rate: ' + Format('{0:0.00}',[ARTaxTran.TaxRate])+'%'#010;)</Value>
+                            </TextBox>
+                            <TextBox Name="textBox37">
+                                <Location>552px, 0px</Location>
                                 <Size>128px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9380,11 +9952,10 @@
                                         <Right>Solid</Right>
                                     </BorderStyle>
                                     <BorderWidth>
-                                        <Bottom>1px</Bottom>
                                         <Right>1px</Right>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
                                     <Padding>
                                         <Bottom>5px</Bottom>
@@ -9392,10 +9963,33 @@
                                     </Padding>
                                     <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>=[ARInvoice.CuryID] + ' ' + [ARInvoice.CuryOrigDocAmt]</Value>
+                                <Value>=[SOFreightDetail.CuryTotalFreightAmt]</Value>
                             </TextBox>
-                            <TextBox Name="textBox31">
-                                <Location>448px, 0px</Location>
+                            <TextBox Name="textBox8">
+                                <Location>440px, 0px</Location>
+                                <Size>112px, 24px</Size>
+                                <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <BorderStyle>
+                                        <Bottom>Solid</Bottom>
+                                        <Left>Solid</Left>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Left>1px</Left>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                    <Padding>
+                                        <Bottom>5px</Bottom>
+                                        <Left>5px</Left>
+                                    </Padding>
+                                </Style>
+                                <Value>Freight: </Value>
+                            </TextBox>
+                            <TextBox Name="textBox82">
+                                <Location>440px, 56px</Location>
                                 <Size>112px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9408,7 +10002,7 @@
                                         <Left>1px</Left>
                                     </BorderWidth>
                                     <Font>
-                                        <Name>Microsoft JhengHei</Name>
+                                        <Name>Microsoft JhengHei UI</Name>
                                         <Style>Bold</Style>
                                     </Font>
                                     <Padding>
@@ -9418,280 +10012,29 @@
                                 </Style>
                                 <Value>INVOICE TOTAL: </Value>
                             </TextBox>
-                        </Items>
-                    </Footer>
-                    <Footer Name="groupFooterSection5">
-                        <Height>1.66667in</Height>
-                        <Items>
-                            <Panel Name="panel1">
-                                <Location>440px, 8px</Location>
-                                <Size>256px, 120px</Size>
-                                <VisibleExpr>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC' And [CurrencyInfo.BaseCuryID] &lt;&gt; 'SGD', True, False)</VisibleExpr>
-                                <Items>
-                                    <TextBox Name="textBox48">
-                                        <Location>112px, 8px</Location>
-                                        <Size>48px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Top>Solid</Top>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Top>1px</Top>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Right>5px</Right>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=' 1' + IsNull([CurrencyInfo.BaseCuryID], '') +  '='</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox49">
-                                        <Location>8px, 8px</Location>
-                                        <Size>104px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Left>Solid</Left>
-                                                <Top>Solid</Top>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Left>1px</Left>
-                                                <Top>1px</Top>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                                <Style>Bold</Style>
-                                            </Font>
-                                            <Padding>
-                                                <Left>5px</Left>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                        </Style>
-                                        <Value>Exchange Rate : </Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox50">
-                                        <Format>#,##0.00;-#,##0.00</Format>
-                                        <Location>112px, 32px</Location>
-                                        <Size>136px, 32px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Right>Solid</Right>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Right>1px</Right>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Right>5px</Right>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=Round([ARInvoice.LineTotal] * [CurrencyRate.CuryRate], 2) + ' )'</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox51">
-                                        <Location>8px, 32px</Location>
-                                        <Size>104px, 32px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Left>Solid</Left>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Left>1px</Left>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                                <Style>Bold</Style>
-                                            </Font>
-                                            <Padding>
-                                                <Left>5px</Left>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                        </Style>
-                                        <Value>='(' + IsNull(@CurySGD, '') + ' Sub-Total: '</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox54">
-                                        <Format>#,##0.00;-#,##0.00</Format>
-                                        <Location>112px, 64px</Location>
-                                        <Size>136px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Right>Solid</Right>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Right>1px</Right>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Right>5px</Right>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=Round(IsNull([ARInvoice.TaxTotal], 0) * [CurrencyRate.CuryRate], 2) + ' )'</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox55">
-                                        <Location>8px, 64px</Location>
-                                        <Size>104px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Left>Solid</Left>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Left>1px</Left>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                                <Style>Bold</Style>
-                                            </Font>
-                                            <Padding>
-                                                <Left>5px</Left>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                        </Style>
-                                        <Value>(add GST @7%</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox63">
-                                        <Location>8px, 88px</Location>
-                                        <Size>104px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Bottom>Solid</Bottom>
-                                                <Left>Solid</Left>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Bottom>1px</Bottom>
-                                                <Left>1px</Left>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                                <Style>Bold</Style>
-                                            </Font>
-                                            <Padding>
-                                                <Bottom>5px</Bottom>
-                                                <Left>5px</Left>
-                                            </Padding>
-                                        </Style>
-                                        <Value>='(' + IsNull(@CurySGD, '') + ' Total: '</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox81">
-                                        <Format>#,##0.0000;-#,##0.0000</Format>
-                                        <Location>112px, 88px</Location>
-                                        <Size>136px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Bottom>Solid</Bottom>
-                                                <Right>Solid</Right>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Bottom>1px</Bottom>
-                                                <Right>1px</Right>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Bottom>5px</Bottom>
-                                                <Right>5px</Right>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=Round([ARInvoice.OrigDocAmt] * [CurrencyRate.CuryRate], 2) + ' )'</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox82">
-                                        <Format>#,##0.0000;-#,##0.0000</Format>
-                                        <Location>160px, 8px</Location>
-                                        <Size>56px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Top>Solid</Top>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Top>1px</Top>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Right>5px</Right>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=IsNull([CurrencyRate.CuryRate], '')</Value>
-                                    </TextBox>
-                                    <TextBox Name="textBox83">
-                                        <Format>#,##0.0000;-#,##0.0000</Format>
-                                        <Location>216px, 8px</Location>
-                                        <Size>32px, 24px</Size>
-                                        <Style>
-                                            <BackColor>Silver</BackColor>
-                                            <BorderStyle>
-                                                <Right>Solid</Right>
-                                                <Top>Solid</Top>
-                                            </BorderStyle>
-                                            <BorderWidth>
-                                                <Right>1px</Right>
-                                                <Top>1px</Top>
-                                            </BorderWidth>
-                                            <Font>
-                                                <Name>Microsoft JhengHei</Name>
-                                            </Font>
-                                            <Padding>
-                                                <Right>5px</Right>
-                                                <Top>5px</Top>
-                                            </Padding>
-                                            <TextAlign>Right</TextAlign>
-                                        </Style>
-                                        <Value>=IsNull(@CurySGD, '')</Value>
-                                    </TextBox>
-                                </Items>
-                            </Panel>
-                            <TextBox Name="textBox38">
-                                <Location>0px, 0px</Location>
-                                <Size>120px, 16px</Size>
+                            <TextBox Name="textBox83">
+                                <Location>552px, 56px</Location>
+                                <Size>128px, 24px</Size>
                                 <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <BorderStyle>
+                                        <Bottom>Solid</Bottom>
+                                        <Right>Solid</Right>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Bottom>1px</Bottom>
+                                        <Right>1px</Right>
+                                    </BorderWidth>
                                     <Font>
-                                        <Style>Bold</Style>
+                                        <Name>Microsoft JhengHei UI</Name>
                                     </Font>
+                                    <Padding>
+                                        <Bottom>5px</Bottom>
+                                        <Right>5px</Right>
+                                    </Padding>
+                                    <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>WayBill/Tracker#: </Value>
-                            </TextBox>
-                            <TextBox Name="textBox41">
-                                <Location>0px, 16px</Location>
-                                <Size>200px, 16px</Size>
-                                <Value>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'APAC',#010;'SG LOCAL DELIVERY',#010;    IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'CHINA',#010;	'CN LOCAL DELIVERY',#010;	[SOShipment.AttributeTRACKNBR]#010;    )#010;)</Value>
-                            </TextBox>
-                            <TextBox Name="textBox44">
-                                <Location>0px, 64px</Location>
-                                <Size>440px, 96px</Size>
-                                <Value>=IIf([ARTran.SOOrderType] = 'SO' And [Organization.OrganizationCD] = 'CHINA',#010;'WALDOM ELECTRONICS (SHANGHAI) CO., LTD' + '{br}'#010;+ 'HSBC BANK (CN) CO LTD, SHANGHAI BRANCH' + '{br}'#010;+ 'ADD: HSBC BLDG, SH IFC, 8 CENTURY AVENUE' + '{br}'#010;+ '(CNY) ACCT#: 715001335001 SWIFT HSBCCNSH' + '{br}'#010;+ 'SHANGHAI 200120' + '{br}'#010;+ 'CN CHINA' + '{br}'#010;+ 'When paying, please send remittance details to arremittanceapac@waldom.com',#010;'Waldom Electronics Asia Pacific (S) Pte Ltd' + '{br}'#010;+ 'HSBC Bank 260, Singapore Branch' + '{br}'#010;+ '21 Collyer Quay; HSBC Building #01-01' + '{br}'#010;+ 'SINGAPORE 049320' + '{br}'#010;+ 'SWIFTBIC: HSBCSGSG Acct # 260-453592-178' + '{br}'#010;+ 'When paying, please send remittance details to arremittanceapac@waldom.com'#010;)</Value>
-                            </TextBox>
-                            <TextBox Name="textBox47">
-                                <Location>0px, 48px</Location>
-                                <Size>120px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                </Style>
-                                <Value>Remit To:</Value>
+                                <Value>=[ARInvoice.CuryID] + ' ' + [ARInvoice.OrigDocAmt]</Value>
                             </TextBox>
                         </Items>
                     </Footer>

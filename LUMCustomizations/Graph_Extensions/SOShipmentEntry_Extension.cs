@@ -23,10 +23,9 @@ namespace PX.Objects.SO
 
                 ex = new PXReportRequiredException(parametersA, _reportAID, $"Report {_reportAID}") { Mode = PXBaseRedirectException.WindowMode.New };
 
-                var _reportBID = "LM641000";
+                var _reportBID = "LM641099";
                 Dictionary<string, string> parametersB = new Dictionary<string, string>();
-                parametersB["OrderNbr"] = Base.Transactions.Current.OrigOrderNbr;
-                parametersB["OrderType"] = Base.Transactions.Current.OrigOrderType;
+                parametersB["ShipmentNbr"] = Base.Transactions.Current.ShipmentNbr;
                 ex.AddSibling(_reportBID, parametersB, false);
 
                 throw ex;

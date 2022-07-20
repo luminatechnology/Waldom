@@ -1,0 +1,7 @@
+C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.csproj.CoreCompileInputs.cache
+C:\Program Files\Acumatica ERP\Waldom\Bin\LUMCustomizations.dll
+C:\Program Files\Acumatica ERP\Waldom\Bin\LUMCustomizations.pdb
+C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.csprojAssemblyReference.cache
+C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.csproj.CopyComplete
+C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.dll
+C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.pdb
