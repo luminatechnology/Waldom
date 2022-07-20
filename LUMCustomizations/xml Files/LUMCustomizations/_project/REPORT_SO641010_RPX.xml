@@ -78,13 +78,13 @@ KV+ihAJARs+8tvpaySrJkkyAICAX+e7G7ueffi7MCvnpfNksW4IFAJzzdqf94dqHmqYt1BfmanMCE8ZB
         <Locale>=[Customer.LocaleName]</Locale>
         <MailSettings>
             <ActivitySource>SOOrder.NoteID</ActivitySource>
-            <Bcc>
-            </Bcc>
             <Body>='Dear Customer,#010;#010;This is an automatic email to notify you that you have a new Sales Order available on your account.  #010;You will find a copy of'+' '+[SOOrderType.Descr]+' '+'#'+' '+[SOOrder.OrderNbr]+' '+'attached to this email.  #010;#010;If you have any questions, please don’t hesitate to contact us at Email.  #010;#010;Thank you for choosing'+' '+[CompanyContact.FullName]+'.'</Body>
+            <Cc>
+            </Cc>
+            <Format>
+            </Format>
             <ParentSource>Customer.NoteID</ParentSource>
             <Subject>=[CompanyContact.FullName]+' '+[SOOrderType.Descr]+' '+'#'+' '+[SOOrder.OrderNbr]</Subject>
-            <TemplateID>
-            </TemplateID>
             <To>=[ShippingContact.Email]</To>
         </MailSettings>
         <PageSettings>
@@ -5411,7 +5411,7 @@ KV+ihAJARs+8tvpaySrJkkyAICAX+e7G7ueffi7MCvnpfNksW4IFAJzzdqf94dqHmqYt1BfmanMCE8ZB
                                     <TextAlign>Right</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>=IIf([SOOrder.CuryFreightAmt] &lt;&gt; 0, [SOOrder.CuryFreightAmt] + [SOOrder.CuryPremiumFreightAmt] , '')</Value>
+                                <Value>=IIf([SOOrder.CuryFreightAmt] &lt;&gt; 0, [SOOrder.CuryFreightAmt]+[SOOrder.CuryPremiumFreightAmt] , '')</Value>
                             </TextBox>
                             <TextBox Name="textBox29">
                                 <Location>280px, 72px</Location>

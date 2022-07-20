@@ -5680,7 +5680,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                         </Style>
                         <StyleName>Normal</StyleName>
-                        <Value>=IIf([InventoryItem.ROHS_Attributes] = True, 'Y', 'N')</Value>
+                        <Value>=IIf([InventoryItem.ROHS_Attributes] &lt;&gt; Null, [InventoryItem.ROHS_Attributes], '')</Value>
                     </TextBox>
                     <TextBox Name="textBox34">
                         <Location>320px, 48px</Location>

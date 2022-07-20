@@ -57,21 +57,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
         </Filters>
         <MailSettings>
             <ActivitySource>SOOrder.NoteID</ActivitySource>
-            <Bcc>
-            </Bcc>
-            <Body>
-            </Body>
-            <Cc>
-            </Cc>
-            <Format>
-            </Format>
             <ParentSource>Customer.NoteID</ParentSource>
-            <Subject>
-            </Subject>
-            <TemplateID>
-            </TemplateID>
-            <To>
-            </To>
         </MailSettings>
         <Parameters>
             <ReportParameter>
@@ -6757,15 +6743,27 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                         <Value>=IIf([ShippingAddress.CountryID] &lt;&gt; Null, [ShippingAddress.CountryID], '') + ' '#010;+ IIf([ShippingAddress.CountryID_description] &lt;&gt; Null, [ShippingAddress.CountryID_description], '')</Value>
                     </TextBox>
                     <TextBox Name="textBox23">
-                        <Location>376px, 280px</Location>
+                        <Location>0px, 368px</Location>
                         <Size>56px, 16px</Size>
                         <Style>
+                            <BorderColor>
+                                <Bottom>Black</Bottom>
+                                <Left>Black</Left>
+                            </BorderColor>
+                            <BorderStyle>
+                                <Bottom>Solid</Bottom>
+                                <Left>Solid</Left>
+                            </BorderStyle>
+                            <BorderWidth>
+                                <Bottom>1px</Bottom>
+                                <Left>1px</Left>
+                            </BorderWidth>
                             <Font>
                                 <Name>Microsoft JhengHei UI</Name>
                                 <Style>Bold</Style>
                             </Font>
                         </Style>
-                        <Value>Ship Via : </Value>
+                        <Value> Ship Via : </Value>
                     </TextBox>
                     <TextBox Name="textBox24">
                         <Location>0px, 320px</Location>
@@ -6883,26 +6881,6 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                         </Style>
                         <Value>=IIf([OrganizationBAccount.LegalName] &lt;&gt; Null, [OrganizationBAccount.LegalName] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine1] &lt;&gt; Null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2] &lt;&gt; Null, [CompanyAddress.AddressLine2] , '')#010;+IIf([CompanyAddress.City] &lt;&gt; Null, ' ' + [CompanyAddress.City], '')#010;+IIf([CompanyAddress.State] &lt;&gt; Null, ' ' + [CompanyAddress.State], '')#010;+IIf([CompanyAddress.CountryID] &lt;&gt; Null, ' ' + [CompanyAddress.CountryID], '')#010;+IIf([CompanyAddress.PostalCode] &lt;&gt; Null, ' ' + [CompanyAddress.PostalCode], '')</Value>
                     </TextBox>
-                    <TextBox Name="textBox30">
-                        <Location>0px, 368px</Location>
-                        <Size>344px, 16px</Size>
-                        <Style>
-                            <BorderStyle>
-                                <Bottom>Solid</Bottom>
-                                <Left>Solid</Left>
-                            </BorderStyle>
-                            <BorderWidth>
-                                <Bottom>1px</Bottom>
-                                <Left>1px</Left>
-                            </BorderWidth>
-                            <Font>
-                                <Name>Microsoft JhengHei UI</Name>
-                            </Font>
-                            <Padding>
-                                <Left>3px</Left>
-                            </Padding>
-                        </Style>
-                    </TextBox>
                     <TextBox Name="textBox31">
                         <Location>344px, 368px</Location>
                         <Size>144px, 16px</Size>
@@ -6943,9 +6921,18 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                         <Visible>False</Visible>
                     </TextBox>
                     <TextBox Name="textBox57">
-                        <Location>432px, 280px</Location>
-                        <Size>216px, 16px</Size>
+                        <Location>56px, 368px</Location>
+                        <Size>288px, 16px</Size>
                         <Style>
+                            <BorderColor>
+                                <Bottom>Black</Bottom>
+                            </BorderColor>
+                            <BorderStyle>
+                                <Bottom>Solid</Bottom>
+                            </BorderStyle>
+                            <BorderWidth>
+                                <Bottom>1px</Bottom>
+                            </BorderWidth>
                             <Font>
                                 <Name>Microsoft JhengHei UI</Name>
                             </Font>
@@ -7858,6 +7845,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                         <Height>2.1164cm</Height>
                         <Items>
                             <TextBox Name="textBox43">
+                                <Format>='0.00'</Format>
                                 <Location>552px, 0px</Location>
                                 <Size>128px, 16px</Size>
                                 <Style>
@@ -7929,7 +7917,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                                     </Padding>
                                     <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>=[SOOrder.CuryID] + ' ' + [SOOrder.CuryTaxTotal]</Value>
+                                <Value>=[SOOrder.CuryTaxTotal]</Value>
                             </TextBox>
                             <TextBox Name="textBox55">
                                 <Location>440px, 48px</Location>

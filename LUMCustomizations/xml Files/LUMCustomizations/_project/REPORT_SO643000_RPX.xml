@@ -9839,9 +9839,54 @@
                 </Headers>
                 <Footers>
                     <Footer Name="groupFooterSection2">
-                        <Height>0.33333in</Height>
+                        <Height>1.16667in</Height>
                         <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD', True, False)</VisibleExpr>
                         <Items>
+                            <TextBox Name="textBox30">
+                                <Format>='0.00'</Format>
+                                <Location>552px, 56px</Location>
+                                <Size>128px, 32px</Size>
+                                <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <BorderStyle>
+                                        <Right>Solid</Right>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Right>1px</Right>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                    </Font>
+                                    <Padding>
+                                        <Right>5px</Right>
+                                        <Top>5px</Top>
+                                    </Padding>
+                                    <TextAlign>Right</TextAlign>
+                                </Style>
+                                <Value>=[ARInvoice.TaxTotal]</Value>
+                            </TextBox>
+                            <TextBox Name="textBox31">
+                                <Location>440px, 56px</Location>
+                                <Size>112px, 32px</Size>
+                                <Style>
+                                    <BackColor>Silver</BackColor>
+                                    <BorderStyle>
+                                        <Left>Solid</Left>
+                                    </BorderStyle>
+                                    <BorderWidth>
+                                        <Left>1px</Left>
+                                    </BorderWidth>
+                                    <Font>
+                                        <Name>Microsoft JhengHei UI</Name>
+                                        <Style>Bold</Style>
+                                    </Font>
+                                    <Padding>
+                                        <Left>5px</Left>
+                                        <Top>5px</Top>
+                                    </Padding>
+                                </Style>
+                                <Value>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'Add GST @7%: ',#010;'Tax Rate: ' + Format('{0:0.00}',[ARTaxTran.TaxRate])+'%'#010;)</Value>
+                            </TextBox>
                             <TextBox Name="textBox35">
                                 <Format>='0.00'</Format>
                                 <Location>552px, 0px</Location>
@@ -9891,59 +9936,8 @@
                                 </Style>
                                 <Value>Sub - Total : </Value>
                             </TextBox>
-                        </Items>
-                    </Footer>
-                    <Footer Name="groupFooterSection3">
-                        <Height>0.75in</Height>
-                        <VisibleExpr>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [SOFreightDetail.CuryTotalFreightAmt] &lt;&gt; 0, True, False)</VisibleExpr>
-                        <Items>
-                            <TextBox Name="textBox30">
-                                <Format>='0.00'</Format>
-                                <Location>552px, 24px</Location>
-                                <Size>128px, 32px</Size>
-                                <Style>
-                                    <BackColor>Silver</BackColor>
-                                    <BorderStyle>
-                                        <Right>Solid</Right>
-                                    </BorderStyle>
-                                    <BorderWidth>
-                                        <Right>1px</Right>
-                                    </BorderWidth>
-                                    <Font>
-                                        <Name>Microsoft JhengHei UI</Name>
-                                    </Font>
-                                    <Padding>
-                                        <Right>5px</Right>
-                                        <Top>5px</Top>
-                                    </Padding>
-                                    <TextAlign>Right</TextAlign>
-                                </Style>
-                                <Value>=[ARInvoice.TaxTotal]</Value>
-                            </TextBox>
-                            <TextBox Name="textBox31">
-                                <Location>440px, 24px</Location>
-                                <Size>112px, 32px</Size>
-                                <Style>
-                                    <BackColor>Silver</BackColor>
-                                    <BorderStyle>
-                                        <Left>Solid</Left>
-                                    </BorderStyle>
-                                    <BorderWidth>
-                                        <Left>1px</Left>
-                                    </BorderWidth>
-                                    <Font>
-                                        <Name>Microsoft JhengHei UI</Name>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                    <Padding>
-                                        <Left>5px</Left>
-                                        <Top>5px</Top>
-                                    </Padding>
-                                </Style>
-                                <Value>=IIf([ARTran.SOOrderType] &lt;&gt; 'BD' And [Organization.OrganizationCD] = 'APAC',#010;'Add GST @7%: ',#010;'Tax Rate: ' + Format('{0:0.00}',[ARTaxTran.TaxRate])+'%'#010;)</Value>
-                            </TextBox>
                             <TextBox Name="textBox37">
-                                <Location>552px, 0px</Location>
+                                <Location>552px, 32px</Location>
                                 <Size>128px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9963,10 +9957,10 @@
                                     </Padding>
                                     <TextAlign>Right</TextAlign>
                                 </Style>
-                                <Value>=[SOFreightDetail.CuryTotalFreightAmt]</Value>
+                                <Value>=IIf([SOFreightDetail.CuryTotalFreightAmt] &lt;&gt; 0, [SOFreightDetail.CuryTotalFreightAmt],'')</Value>
                             </TextBox>
                             <TextBox Name="textBox8">
-                                <Location>440px, 0px</Location>
+                                <Location>440px, 32px</Location>
                                 <Size>112px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -9986,10 +9980,10 @@
                                         <Left>5px</Left>
                                     </Padding>
                                 </Style>
-                                <Value>Freight: </Value>
+                                <Value>=IIf([SOFreightDetail.CuryTotalFreightAmt] &lt;&gt; 0, 'Freight: ','')#010;</Value>
                             </TextBox>
                             <TextBox Name="textBox82">
-                                <Location>440px, 56px</Location>
+                                <Location>440px, 88px</Location>
                                 <Size>112px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -10013,7 +10007,7 @@
                                 <Value>INVOICE TOTAL: </Value>
                             </TextBox>
                             <TextBox Name="textBox83">
-                                <Location>552px, 56px</Location>
+                                <Location>552px, 88px</Location>
                                 <Size>128px, 24px</Size>
                                 <Style>
                                     <BackColor>Silver</BackColor>
@@ -10037,6 +10031,10 @@
                                 <Value>=[ARInvoice.CuryID] + ' ' + [ARInvoice.OrigDocAmt]</Value>
                             </TextBox>
                         </Items>
+                    </Footer>
+                    <Footer Name="groupFooterSection3">
+                        <Height>0px</Height>
+                        <Visible>False</Visible>
                     </Footer>
                 </Footers>
             </Group>

@@ -92,18 +92,36 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                 <ParentName>SOShipment</ParentName>
             </ReportRelation>
             <ReportRelation>
-                <ChildName>SOOrder</ChildName>
+                <ChildName>SOLine</ChildName>
                 <Links>
                     <RelationRow>
-                        <ChildField>OrderType</ChildField>
-                        <ParentField>OrigOrderType</ParentField>
+                        <ChildField>LineNbr</ChildField>
+                        <ParentField>OrigLineNbr</ParentField>
                     </RelationRow>
                     <RelationRow>
                         <ChildField>OrderNbr</ChildField>
                         <ParentField>OrigOrderNbr</ParentField>
                     </RelationRow>
+                    <RelationRow>
+                        <ChildField>OrderType</ChildField>
+                        <ParentField>OrigOrderType</ParentField>
+                    </RelationRow>
                 </Links>
                 <ParentName>SOShipLine</ParentName>
+            </ReportRelation>
+            <ReportRelation>
+                <ChildName>SOOrder</ChildName>
+                <Links>
+                    <RelationRow>
+                        <ChildField>OrderNbr</ChildField>
+                        <ParentField>OrderNbr</ParentField>
+                    </RelationRow>
+                    <RelationRow>
+                        <ChildField>OrderType</ChildField>
+                        <ParentField>OrderType</ParentField>
+                    </RelationRow>
+                </Links>
+                <ParentName>SOLine</ParentName>
             </ReportRelation>
             <ReportRelation>
                 <ChildName>Branch</ChildName>
@@ -152,20 +170,6 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                     </RelationRow>
                 </Links>
                 <ParentName>BAccount</ParentName>
-            </ReportRelation>
-            <ReportRelation>
-                <ChildName>SOLine</ChildName>
-                <Links>
-                    <RelationRow>
-                        <ChildField>OrderNbr</ChildField>
-                        <ParentField>OrderNbr</ParentField>
-                    </RelationRow>
-                    <RelationRow>
-                        <ChildField>OrderType</ChildField>
-                        <ParentField>OrderType</ParentField>
-                    </RelationRow>
-                </Links>
-                <ParentName>SOOrder</ParentName>
             </ReportRelation>
             <ReportRelation>
                 <ChildName>InventoryItem</ChildName>
@@ -7672,7 +7676,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                                 <Name>Microsoft JhengHei UI</Name>
                             </Font>
                         </Style>
-                        <Value>=IsNull([SOOrder.ShipVia_description], '')</Value>
+                        <Value>=IsNull([SOShipment.ShipVia], '')</Value>
                     </TextBox>
                     <TextBox Name="textBox58">
                         <Location>40px, 320px</Location>
@@ -7918,7 +7922,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                                 <Name>Microsoft JhengHei UI</Name>
                             </Font>
                         </Style>
-                        <Value>='SOURCING INFORMATION: ' + IIF([SOLineSplit.LotSerialNbr] &lt;&gt; Null, [SOLineSplit.LotSerialNbr], '')</Value>
+                        <Value>='SOURCING INFORMATION: ' + IIF([SOShipLine.LotSerialNbr] &lt;&gt; Null, [SOShipLine.LotSerialNbr], '')</Value>
                     </TextBox>
                     <TextBox Name="textBox66">
                         <Location>232px, 48px</Location>
