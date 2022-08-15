@@ -4898,7 +4898,7 @@ KV+ihAJARs+8tvpaySrJkkyAICAX+e7G7ueffi7MCvnpfNksW4IFAJzzdqf94dqHmqYt1BfmanMCE8ZB
                                 <Name>Microsoft JhengHei UI</Name>
                             </Font>
                         </Style>
-                        <Value>=[SOOrder.ShipVia_description]</Value>
+                        <Value>=[SOOrder.ShipVia]</Value>
                     </TextBox>
                     <TextBox Name="textBox80">
                         <Location>552px, 168px</Location>

@@ -7845,7 +7845,7 @@ ZiBPPvwrfx5/VFcqhf78Pof+4H2FCODS3eT36NA49/QIO9ewH7wlTYJs9F2mno246vJlE47RklkU0Fix
                         <Height>2.1164cm</Height>
                         <Items>
                             <TextBox Name="textBox43">
-                                <Format>='0.00'</Format>
+                                <Format>#,##0.00</Format>
                                 <Location>552px, 0px</Location>
                                 <Size>128px, 16px</Size>
                                 <Style>

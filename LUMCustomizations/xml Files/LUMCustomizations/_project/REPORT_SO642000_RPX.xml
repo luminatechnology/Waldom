@@ -326,6 +326,21 @@
                 <ParentName>SOShipLine</ParentName>
             </ReportRelation>
             <ReportRelation>
+                <ChildAlias>InventoryAttributeDetail</ChildAlias>
+                <ChildName>CSAttributeDetail</ChildName>
+                <Links>
+                    <RelationRow>
+                        <ChildField>AttributeID</ChildField>
+                        <ParentField>='ROHS'</ParentField>
+                    </RelationRow>
+                    <RelationRow>
+                        <ChildField>ValueID</ChildField>
+                        <ParentField>=TRIM([InventoryItem.ROHS_Attributes])</ParentField>
+                    </RelationRow>
+                </Links>
+                <ParentName>InventoryItem</ParentName>
+            </ReportRelation>
+            <ReportRelation>
                 <ChildName>Organization</ChildName>
                 <Links>
                     <RelationRow>
@@ -5424,6 +5439,78 @@
                 </Fields>
                 <FullName>PX.Objects.CS.DAC.OrganizationBAccount</FullName>
             </ReportTable>
+            <ReportTable Name="CSAttributeDetail">
+                <Fields>
+                    <ReportField Name="AttributeID">
+                    </ReportField>
+                    <ReportField Name="CreatedByID">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_displayName">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_Creator_Username">
+                    </ReportField>
+                    <ReportField Name="CreatedByID_description">
+                    </ReportField>
+                    <ReportField Name="CreatedByScreenID">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="CreatedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="Description">
+                    </ReportField>
+                    <ReportField Name="Disabled">
+                        <DataType>Boolean</DataType>
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_description">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_displayName">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByID_Modifier_Username">
+                    </ReportField>
+                    <ReportField Name="LastModifiedByScreenID">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime">
+                        <DataType>DateTime</DataType>
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Day">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Hour">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Month">
+                    </ReportField>
+                    <ReportField Name="LastModifiedDateTime_Quarter">
+                    </ReportField>
+                    <ReportField Name="NoteActivity">
+                    </ReportField>
+                    <ReportField Name="NoteFiles">
+                    </ReportField>
+                    <ReportField Name="NoteID">
+                        <DataType>Object</DataType>
+                    </ReportField>
+                    <ReportField Name="NoteImages">
+                    </ReportField>
+                    <ReportField Name="NoteText">
+                    </ReportField>
+                    <ReportField Name="SortOrder">
+                        <DataType>Int16</DataType>
+                    </ReportField>
+                    <ReportField Name="tstamp">
+                    </ReportField>
+                    <ReportField Name="ValueID">
+                    </ReportField>
+                </Fields>
+                <FullName>PX.Objects.CS.CSAttributeDetail</FullName>
+            </ReportTable>
         </Tables>
         <Version>20220419</Version>
         <ViewerFields>
@@ -5680,7 +5767,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                         </Style>
                         <StyleName>Normal</StyleName>
-                        <Value>=IIf([InventoryItem.ROHS_Attributes] &lt;&gt; Null, [InventoryItem.ROHS_Attributes], '')</Value>
+                        <Value>=IIf([InventoryAttributeDetail.ValueID] &lt;&gt; Null, [InventoryAttributeDetail.ValueID], '')</Value>
                     </TextBox>
                     <TextBox Name="textBox34">
                         <Location>320px, 48px</Location>
@@ -5893,7 +5980,7 @@
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
-                                <Value>Waldom SO#:</Value>
+                                <Value>SO#:</Value>
                             </TextBox>
                             <TextBox Name="textBox46">
                                 <Location>80px, 184px</Location>
@@ -6076,12 +6163,14 @@
                                         </Style>
                                         <StyleName>Normal</StyleName>
                                         <Value>Bill To:</Value>
+                                        <VisibleExpr>=IIF([SOShipLine.OrigOrderType] = 'BF', False, True)</VisibleExpr>
                                     </TextBox>
                                     <TextBox Name="textBox95">
                                         <Location>360px, 17px</Location>
                                         <Size>336px, 96px</Size>
                                         <StyleName>RecepientCompany</StyleName>
                                         <Value>=IIf([CustomerBAccount.AcctName]&lt;&gt; null, [CustomerBAccount.AcctName] + '{br}','')#010;+IIf([CustomerAddress.AddressLine1]&lt;&gt;null,[CustomerAddress.AddressLine1]+'{br}','')#010;+IIf([CustomerAddress.AddressLine2]&lt;&gt;null,[CustomerAddress.AddressLine2]+'{br}','')#010;+IIf([CustomerAddress.City]&lt;&gt;null,        [CustomerAddress.City]+' ','')#010;+IIf([CustomerAddress.State]&lt;&gt;null,       [CustomerAddress.State]+' ','')#010;+IIf([CustomerAddress.PostalCode]&lt;&gt;null,  [CustomerAddress.PostalCode],'')#010;+IIf([CustomerAddress.City]&lt;&gt;null OR [CustomerAddress.State]&lt;&gt;null OR [CustomerAddress.PostalCode]&lt;&gt;null,'{br}','')#010;+IIf([CustomerAddress.CountryID]&lt;&gt;null,   [CustomerAddress.CountryID_Country_description]+'{br}','')#010;+IIf([CustomerContact.Attention]&lt;&gt;null,  'Attn: ' + [CustomerContact.Attention],'')</Value>
+                                        <VisibleExpr>=IIF([SOShipLine.OrigOrderType] = 'BF', False, True)</VisibleExpr>
                                     </TextBox>
                                     <TextBox Name="textBox96">
                                         <Location>0px, 0px</Location>
@@ -6257,21 +6346,6 @@
                                 </Style>
                                 <Value>P A C K I N G   L I S T #:</Value>
                             </TextBox>
-                            <TextBox Name="textBox83">
-                                <Location>80px, 144px</Location>
-                                <Size>120px, 16px</Size>
-                                <Value>***SALES COPY***</Value>
-                            </TextBox>
-                            <TextBox Name="textBox84">
-                                <Location>376px, 80px</Location>
-                                <Size>80px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                </Style>
-                                <Value>Email: </Value>
-                            </TextBox>
                             <TextBox Name="textBox85">
                                 <Location>32px, 384px</Location>
                                 <Size>88px, 16px</Size>
@@ -6280,12 +6354,7 @@
                                         <Style>Bold</Style>
                                     </Font>
                                 </Style>
-                                <Value>Waldom SO#:</Value>
-                            </TextBox>
-                            <TextBox Name="textBox86">
-                                <Location>456px, 80px</Location>
-                                <Size>224px, 16px</Size>
-                                <Value>=[CustomerContact.EMail]</Value>
+                                <Value>SO#:</Value>
                             </TextBox>
                             <TextBox Name="textBox87">
                                 <Location>616px, 0px</Location>
@@ -6314,21 +6383,6 @@
                                     </Font>
                                 </Style>
                                 <Value>Printed: </Value>
-                            </TextBox>
-                            <TextBox Name="textBox90">
-                                <Location>456px, 64px</Location>
-                                <Size>224px, 16px</Size>
-                                <Value>=UCase([CustomerAddress.City]) + ' UNASSIGNED'</Value>
-                            </TextBox>
-                            <TextBox Name="textBox91">
-                                <Location>376px, 64px</Location>
-                                <Size>80px, 16px</Size>
-                                <Style>
-                                    <Font>
-                                        <Style>Bold</Style>
-                                    </Font>
-                                </Style>
-                                <Value>Salesperson: </Value>
                             </TextBox>
                             <TextBox Name="textBox92">
                                 <Location>8px, 8px</Location>
@@ -6360,6 +6414,7 @@
                             <Line Name="line5">
                                 <Location>0px, 112px</Location>
                                 <Size>696px, 8px</Size>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </Line>
                             <TextBox Name="textBox20">
                                 <Location>0px, 40px</Location>
@@ -6371,6 +6426,7 @@
                                     <TextAlign>Center</TextAlign>
                                 </Style>
                                 <Value>CERTIFICATE OF CONFORMANCE</Value>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </TextBox>
                             <TextBox Name="textBox21">
                                 <Location>0px, 56px</Location>
@@ -6382,7 +6438,8 @@
                                     <TextAlign>Center</TextAlign>
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
-                                <Value>=IIF([SOLine.OrigOrderType] = 'BF',#010;'The product has been manufactured in accordance with applicable',#010;'This certifies that Waldom Electronics Corp. is an authorized distributor of the material in this order, and that the product has been manufactured in accordance with applicable')</Value>
+                                <Value>=IIF([SOLine.OrigOrderType] = 'BF',#010;'The product has been manufactured in accordance with applicable',#010;'This certifies that Waldom Electronics. is an authorized distributor of the material in this order, and that the product has been manufactured in accordance with applicable')</Value>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </TextBox>
                             <TextBox Name="textBox22">
                                 <Location>0px, 72px</Location>
@@ -6395,6 +6452,7 @@
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
                                 <Value>=IIF([SOLine.OrigOrderType] = 'BF',#010;'specifications as set forth by the manufacturing company.',#010;'specifications as set forth by the manufacturing company. The product listed on this Packing List is traceable back to the purchase order that Waldom received it under.')</Value>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </TextBox>
                             <TextBox Name="textBox24">
                                 <Location>128px, 88px</Location>
@@ -6407,6 +6465,7 @@
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
                                 <Value>=IIF([SOLine.OrigOrderType] = 'BF','','Director of Quality')</Value>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </TextBox>
                             <TextBox Name="textBox25">
                                 <Location>0px, 120px</Location>
@@ -6419,6 +6478,7 @@
                                     <VerticalAlign>Middle</VerticalAlign>
                                 </Style>
                                 <Value>The goods included with this order are sold subject to the Seller's Terms and Conditions</Value>
+                                <VisibleExpr>=IIF([SOOrder.OrderType] = 'BF', False, True)</VisibleExpr>
                             </TextBox>
                             <TextBox Name="textBox35">
                                 <Format>='MM/dd/yy'</Format>

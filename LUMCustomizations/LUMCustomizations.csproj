@@ -47,6 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\PX.Data.dll</HintPath>
     </Reference>
+    <Reference Include="PX.Data.BQL.Fluent, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Bin\PX.Data.BQL.Fluent.dll</HintPath>
+    </Reference>
     <Reference Include="PX.Objects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Bin\PX.Objects.dll</HintPath>
@@ -58,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph_Extensions\SOInvoiceEntryExtension.cs" />
     <Compile Include="Graph_Extensions\SOShipmentEntry_Extension.cs" />
     <Compile Include="Graph_Extensions\SOOrderEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
