@@ -62,6 +62,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAC\LUMProductRelease.cs" />
+    <Compile Include="Graph\ProductReleaseExportProcess.cs" />
     <Compile Include="Graph_Extensions\SOInvoiceEntryExtension.cs" />
     <Compile Include="Graph_Extensions\SOShipmentEntry_Extension.cs" />
     <Compile Include="Graph_Extensions\SOOrderEntry.cs" />
