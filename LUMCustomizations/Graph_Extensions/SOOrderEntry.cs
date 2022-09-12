@@ -26,7 +26,8 @@ namespace PX.Objects.SO
         #endregion
 
         #region Event Handlers
-        protected void _(Events.FieldUpdated<SOLine.inventoryID> e, PXFieldUpdated baseHandler)
+        //protected void _(Events.FieldUpdated<SOLine.inventoryID> e, PXFieldUpdated baseHandler)
+        protected void _(Events.RowUpdated<SOLine> e, PXRowUpdated baseHandler)
         {
             baseHandler?.Invoke(e.Cache, e.Args);
 
