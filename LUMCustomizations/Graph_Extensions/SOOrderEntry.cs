@@ -26,17 +26,17 @@ namespace PX.Objects.SO
         #endregion
 
         #region Event Handlers
-        //protected void _(Events.FieldUpdated<SOLine.inventoryID> e, PXFieldUpdated baseHandler)
         protected void _(Events.RowUpdated<SOLine> e, PXRowUpdated baseHandler)
         {
             baseHandler?.Invoke(e.Cache, e.Args);
 
-            SOLine row = e.Row as SOLine;
+            SOLine newRow = e.Row;
+            SOLine oldRow = e.OldRow;
 
-            if (row != null && Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true)
+            if (newRow != null && Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true && oldRow.POSource == null)
             {
-                row.POCreate = true;
-                row.POSource = IN.INReplenishmentSource.DropShipToOrder;
+                newRow.POCreate = true;
+                newRow.POSource = IN.INReplenishmentSource.DropShipToOrder;
             }
         }
         #endregion
