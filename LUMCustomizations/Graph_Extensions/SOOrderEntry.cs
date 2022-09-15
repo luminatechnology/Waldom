@@ -33,7 +33,7 @@ namespace PX.Objects.SO
             SOLine newRow = e.Row;
             SOLine oldRow = e.OldRow;
 
-            if (newRow != null && Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true && oldRow.POSource == null)
+            if (newRow != null && Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true && (oldRow.POSource == null || oldRow.SiteID == null))
             {
                 newRow.POCreate = true;
                 newRow.POSource = IN.INReplenishmentSource.DropShipToOrder;
