@@ -63,10 +63,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAC\LUMProductRelease.cs" />
+    <Compile Include="DAC\LUMWaldomPreference.cs" />
+    <Compile Include="Graph\LUMWaldomSetup.cs" />
     <Compile Include="Graph\ProductReleaseExportProcess.cs" />
     <Compile Include="Graph_Extensions\SOInvoiceEntryExtension.cs" />
     <Compile Include="Graph_Extensions\SOShipmentEntry_Extension.cs" />
     <Compile Include="Graph_Extensions\SOOrderEntry.cs" />
+    <Compile Include="Helper\FTPHelper.cs" />
+    <Compile Include="Helper\Model\Interface\IFTPConfig.cs" />
+    <Compile Include="Helper\Model\WaldomFTPConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

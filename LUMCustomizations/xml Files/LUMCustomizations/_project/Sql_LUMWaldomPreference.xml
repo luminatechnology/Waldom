@@ -1,0 +1,15 @@
+﻿<Sql TableName="LUMWaldomPreference" TableSchemaXml="#CDATA">
+    <CDATA name="TableSchemaXml"><![CDATA[<table name="LUMWaldomPreference">
+  <col name="FTPHost" type="NVarChar(1024)" nullable="true" />
+  <col name="FTPUserName" type="NVarChar(1024)" nullable="true" />
+  <col name="FTPPassword" type="NVarChar(1024)" nullable="true" />
+  <col name="FTPPort" type="Int" nullable="true" />
+  <col name="CreatedByID" type="UniqueIdentifier" />
+  <col name="CreatedByScreenID" type="Char(8)" />
+  <col name="CreatedDateTime" type="DateTime" />
+  <col name="LastModifiedByID" type="UniqueIdentifier" />
+  <col name="LastModifiedByScreenID" type="Char(8)" />
+  <col name="LastModifiedDateTime" type="DateTime" />
+  <col name="tstamp" type="Timestamp" />
+</table>]]></CDATA>
+</Sql>
