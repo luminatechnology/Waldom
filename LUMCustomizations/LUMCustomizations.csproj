@@ -69,7 +69,6 @@
     <Compile Include="Graph_Extensions\SOInvoiceEntryExtension.cs" />
     <Compile Include="Graph_Extensions\SOOrderEntry.cs" />
     <Compile Include="Graph_Extensions\SOShipmentEntry_Extension.cs" />
-    <Compile Include="Graph_Extensions\SOOrderEntry.cs" />
     <Compile Include="Helper\FTPHelper.cs" />
     <Compile Include="Helper\Model\Interface\IFTPConfig.cs" />
     <Compile Include="Helper\Model\WaldomFTPConfig.cs" />
