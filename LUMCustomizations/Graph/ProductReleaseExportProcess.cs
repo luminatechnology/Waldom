@@ -29,7 +29,6 @@ namespace LUMCustomizations.Graph
         public ProductReleaseExportProcess()
         {
             this.Transactions.SetProcessVisible(false);
-            this.Transactions.SetProcessAllCaption("Export csv File");
             this.Transactions.SetProcessDelegate(delegate (List<LUMProductRelease> list)
                 {
                     GoProcessing(list);
