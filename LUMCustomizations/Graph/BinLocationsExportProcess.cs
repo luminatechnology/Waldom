@@ -55,7 +55,7 @@ namespace LUMCustomizations.Graph
                     Seq = i++,
                     RegionName = branch?.Descr == "Singapore Office" ? "APAC" : "CHINA",
                     Location = lotSite?.SiteCD,//INLostSerialStatus.siteID
-                    UIDNumber = inventoryItem?.InventoryCD,//inventoryItem.inventiryID
+                    UIDNumber = inventoryItem?.InventoryID,//inventoryItem.inventiryID
                     PRC = itemClass?.ItemClassCD,//inventoryItem.itemClassID
                     PartNumber = lotInventoryItem?.InventoryCD,//INLostSerialStatus.inventoryID
                     BinLocation = lotLocation?.LocationCD,//INLostSerialStatus.loactionID
@@ -99,9 +99,10 @@ namespace LUMCustomizations.Graph
                     {
                         #region title
                         string[] title = {
-                                "Region", "LocationCode", "UIDNumber", "PRC", "PartNumber",
-                                "BinLocation", "Quantity", "Cost", "DateCreated", "DateCreatedAscending",
-                                "COO", "StockRecoveryFlag", "AgedInventoryFlag", "DateCode", "DateCodeDecoded"
+                               "Region","Location","UIDNumber","PRC","PartNumber"
+                                ,"BinLocation","Quantity","Cost","DateCreated","DateCreatedAscending"
+                                ,"COO","StockRecoveryFlag","AgedInventoryFlag","DateCode","DateCodeDecoded"
+                                ,"LotCode","PONumber","ReceiptNumber","Currency"
                             };
                         sw.WriteLine(string.Join("|", title));
                         #endregion
@@ -111,7 +112,7 @@ namespace LUMCustomizations.Graph
                             List<string> detail = new List<string>();
                             detail.Add(ToCsvStr(item.RegionName));//Region
                             detail.Add(ToCsvStr(item.Location));//Location
-                            detail.Add(ToCsvStr(item.UIDNumber));//UIDNumber
+                            detail.Add(ToCsvStr(item.UIDNumber?.ToString()));//UIDNumber
                             detail.Add(ToCsvStr(item.PRC));//PRC
                             detail.Add(ToCsvStr(item.PartNumber));//PartNumber
                             detail.Add(ToCsvStr(item.BinLocation));//BinLocation
@@ -164,9 +165,10 @@ namespace LUMCustomizations.Graph
         #endregion
 
         #region Method
-        private static string ToCsvStr(string str) {
+        private static string ToCsvStr(string str)
+        {
             if (str == null) return "";
-            return "\""+str.Trim()+"\"";
+            return "\"" + str.Trim() + "\"";
         }
 
         private string subStr(string str, int index, int length)

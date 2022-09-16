@@ -39,10 +39,10 @@ namespace LUMCustomizations.DAC
         #endregion
 
         #region UIDNumber
-        [PXString]
+        [PXInt]
         [PXUIField(DisplayName = "UIDNumber")]
-        public virtual String UIDNumber { get; set; }
-        public abstract class uIDNumber : PX.Data.BQL.BqlString.Field<uIDNumber> { }
+        public virtual int? UIDNumber { get; set; }
+        public abstract class uIDNumber : PX.Data.BQL.BqlInt.Field<uIDNumber> { }
         #endregion
 
         #region PRC
