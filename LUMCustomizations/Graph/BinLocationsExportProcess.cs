@@ -19,6 +19,8 @@ namespace LUMCustomizations.Graph
 
         #region const
         const string GI_NAME = "Export Bin Locations";
+        //因UAT測試的關係暫時改為/Download/ (原/Upload/)
+        const string UPLOAD_PATH = @"/Download/";
         #endregion
 
         #region View
@@ -144,7 +146,7 @@ namespace LUMCustomizations.Graph
                         FtpPort = setup?.FTPPort?.ToString()
                     };
                     FTPHelper helper = new FTPHelper(config);
-                    var uploadResult = helper.UploadFileToFTP(stream.ToArray(), @"/Upload/", $"Export_Bin_Location_INC_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
+                    var uploadResult = helper.UploadFileToFTP(stream.ToArray(), UPLOAD_PATH, $"Export_Bin_Location_INC_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
                     if (!uploadResult)
                         throw new Exception("Upload FTP Fail");
                     #endregion
