@@ -17,6 +17,9 @@ namespace LUMCustomizations.Graph
 {
     public class ProductReleaseExportProcess : PXGraph<ProductReleaseExportProcess>
     {
+        //因UAT測試的關係暫時改為/Download/ (原/Upload/)
+        const string UPLOAD_PATH = @"/Download/";
+
         public PXSave<LUMProductRelease> Save;
 
         public PXCancel<LUMProductRelease> Cancel;
@@ -153,7 +156,8 @@ namespace LUMCustomizations.Graph
                             FtpPort = setup?.FTPPort?.ToString()
                         };
                         FTPHelper helper = new FTPHelper(config);
-                        var uploadResult = helper.UploadFileToFTP(stream.ToArray(), @"/Upload/", $"EXPORT_PRODUCT_RELEASE_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
+                        //
+                        var uploadResult = helper.UploadFileToFTP(stream.ToArray(), UPLOAD_PATH, $"EXPORT_PRODUCT_RELEASE_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
                         if (!uploadResult)
                             throw new Exception("Upload FTP Fail");
                     }
