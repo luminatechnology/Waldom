@@ -33,10 +33,16 @@ namespace PX.Objects.SO
             SOLine newRow = e.Row;
             SOLine oldRow = e.OldRow;
 
-            if (newRow != null && Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true && (oldRow.POSource == null || oldRow.SiteID == null))
+            bool enablePOCreate = Base.soordertype.Current?.GetExtension<SOOrderTypeExt>()?.UsrEnablePOCreateAuto == true;
+
+            if (newRow != null && enablePOCreate)
             {
-                newRow.POCreate = true;
-                newRow.POSource = IN.INReplenishmentSource.DropShipToOrder;
+                                  // Manual changes / standard overrides
+                newRow.POCreate = (newRow.POCreate == false && oldRow.POCreate == true) ? 
+                                  // Change warehouse
+                                  (oldRow.SiteID != null && e.Cache.ObjectsEqual<SOLine.siteID>(newRow, oldRow)) ? newRow.POCreate.Value :  enablePOCreate :
+                                  newRow.InventoryID != null;
+                newRow.POSource = string.IsNullOrEmpty(newRow.POSource) && newRow.POCreate.Value ? IN.INReplenishmentSource.DropShipToOrder : newRow.POSource;
             }
         }
         #endregion
