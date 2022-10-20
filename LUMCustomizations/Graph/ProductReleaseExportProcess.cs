@@ -10,11 +10,16 @@ using System.Threading.Tasks;
 using PX.Objects.IN;
 using PX.Objects.AR;
 using System.IO;
+using LUMCustomizations.Helper.Model;
+using LUMCustomizations.Helper;
 
 namespace LUMCustomizations.Graph
 {
     public class ProductReleaseExportProcess : PXGraph<ProductReleaseExportProcess>
     {
+        //因UAT測試的關係暫時改為/Download/ (原/Upload/)
+        const string UPLOAD_PATH = @"/Download/";
+
         public PXSave<LUMProductRelease> Save;
 
         public PXCancel<LUMProductRelease> Cancel;
@@ -27,7 +32,6 @@ namespace LUMCustomizations.Graph
         public ProductReleaseExportProcess()
         {
             this.Transactions.SetProcessVisible(false);
-            this.Transactions.SetProcessAllCaption("Export csv File");
             this.Transactions.SetProcessDelegate(delegate (List<LUMProductRelease> list)
                 {
                     GoProcessing(list);
@@ -135,7 +139,7 @@ namespace LUMCustomizations.Graph
                             for (int i = 0; i < maxColumnCount; i++)
                             {
                                 line.Add(item.ElementAtOrDefault(i)?.BreakQty?.ToString("0"));
-                                line.Add(item.ElementAtOrDefault(i)?.SalesPrice?.ToString("0.00"));
+                                line.Add(item.ElementAtOrDefault(i)?.SalesPrice?.ToString("0.00000"));
                             }
                             line.Add(item.Key?.CuryID);
                             sw.WriteLine(string.Join("|", line));
@@ -143,7 +147,19 @@ namespace LUMCustomizations.Graph
                         }
                         #endregion
 
-                        throw new PXRedirectToFileException(new PX.SM.FileInfo(Guid.NewGuid(), "EXPORT_PRODUCT_RELEASE.csv", null, stream.ToArray(), string.Empty), true);
+                        var setup = SelectFrom<LUMWaldomPreference>.View.Select(this).TopFirst;
+                        WaldomFTPConfig config = new WaldomFTPConfig()
+                        {
+                            FtpHost = setup?.FtpHost,
+                            FtpUserName = setup?.FTPUserName,
+                            FtpPassword = setup?.FTPPassword,
+                            FtpPort = setup?.FTPPort?.ToString()
+                        };
+                        FTPHelper helper = new FTPHelper(config);
+                        //
+                        var uploadResult = helper.UploadFileToFTP(stream.ToArray(), UPLOAD_PATH, $"EXPORT_PRODUCT_RELEASE_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv");
+                        if (!uploadResult)
+                            throw new Exception("Upload FTP Fail");
                     }
                 }
             }

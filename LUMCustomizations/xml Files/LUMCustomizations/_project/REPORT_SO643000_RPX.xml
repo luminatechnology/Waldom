@@ -35,9 +35,17 @@
         <Locale>=[Customer.LocaleName]</Locale>
         <MailSettings>
             <ActivitySource>ARInvoice.NoteID</ActivitySource>
+            <Bcc>
+            </Bcc>
             <Body>='Dear Customer,#010;#010;This is an automatic email to notify you that you have a new Invoice available on your account.  #010;You will find a copy of'+' '+[ARInvoice.PrintDocType]+' '+'#'+' '+[ARInvoice.RefNbr]+' '+'attached to this email.  #010;#010;If you have any questions, please don’t hesitate to contact us at Email.  #010;#010;Thank you for choosing'+' '+[CompanyContact.FullName]+'.'#010;</Body>
+            <Cc>
+            </Cc>
+            <Format>
+            </Format>
             <ParentSource>Customer.NoteID</ParentSource>
             <Subject>=[CompanyContact.FullName]+' '+[ARInvoice.PrintDocType]+' '+'#'+' '+[ARInvoice.RefNbr]</Subject>
+            <TemplateID>
+            </TemplateID>
             <To>=IsNull([BillingContact.EMail],'')</To>
         </MailSettings>
         <PageSettings>
@@ -9641,7 +9649,7 @@
                                             </Padding>
                                             <TextAlign>Right</TextAlign>
                                         </Style>
-                                        <Value>='1USD = ' + IsNull([ARInvoice.AttributeCURYRATE], '1') + ' SGD'</Value>
+                                        <Value>='1USD = ' +IIF([ARInvoice.AttributeCURYRATE] = Null, '1', FORMAT('{0:0.0000}',CDEC([ARInvoice.AttributeCURYRATE]))) + ' SGD'</Value>
                                     </TextBox>
                                     <TextBox Name="textBox49">
                                         <Location>8px, 8px</Location>

@@ -1,0 +1,17 @@
+﻿using LUMCustomizations.Helper.Model.Interface;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LUMCustomizations.Helper.Model
+{
+    public class WaldomFTPConfig : IFTPConfig
+    {
+        public string FtpHost { get; set; }
+        public string FtpUserName { get; set; }
+        public string FtpPassword { get; set; }
+        public string FtpPort { get; set; }
+    }
+}
