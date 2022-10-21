@@ -57,11 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAC\ExportBinLocations.cs" />
+    <Compile Include="DAC\LUMBDSPurchaseReceipt.cs" />
     <Compile Include="DAC\LUMProductRelease.cs" />
     <Compile Include="DAC\LUMWaldomPreference.cs" />
     <Compile Include="DAC_Extensions\INSiteExtensions.cs" />
     <Compile Include="DAC_Extensions\SOOrderTypeExtensions.cs" />
     <Compile Include="Graph\BinLocationsExportProcess.cs" />
+    <Compile Include="Graph\LUMBDSPurchaseReceiptPorcess.cs" />
     <Compile Include="Graph\LUMWaldomSetup.cs" />
     <Compile Include="Graph\ProductReleaseExportProcess.cs" />
     <Compile Include="Graph_Extensions\IntercompanyExt.cs" />
