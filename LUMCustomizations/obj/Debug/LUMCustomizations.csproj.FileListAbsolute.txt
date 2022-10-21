@@ -5,3 +5,5 @@ C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\De
 C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.csproj.CopyComplete
 C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.dll
 C:\Program Files\Acumatica ERP\Waldom\App_Data\Projects\LUMCustomizations\obj\Debug\LUMCustomizations.pdb
+C:\Program Files\Acumatica ERP\Bin\LUMCustomizations.dll
+C:\Program Files\Acumatica ERP\Bin\LUMCustomizations.pdb
