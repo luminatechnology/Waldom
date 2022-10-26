@@ -80,7 +80,7 @@ namespace LUMCustomizations.Helper
             return fileList;
         }
 
-        /// <summary> Upload File by FTP </summary>
+        /// <summary> Get csv File by FTP </summary>
         public List<string> GetCSVFile(string downloadPath, List<string> fileList)
         {
             var csvData = new List<string>();

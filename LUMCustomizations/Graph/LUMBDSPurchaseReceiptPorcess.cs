@@ -71,7 +71,9 @@ namespace LUMCustomizations.Graph
             foreach (var csvLine in csv.Skip(1))
             {
                 var data = csvLine.Split('|');
-                var line = baseGraph.Transactions.Cache.CreateInstance() as LUMBDSPurchaseReceipt;
+                var mapLine = baseGraph.Transactions.Select()
+                             .RowCast<LUMBDSPurchaseReceipt>().FirstOrDefault(x => x.POOrderNbr == data[4] && x.POLineNbr == int.Parse(data[6]));
+                var line = mapLine ?? baseGraph.Transactions.Cache.CreateInstance() as LUMBDSPurchaseReceipt;
                 #region Convert CSV to Entity
                 line.Region = data[0];
                 line.CSVType = data[1];
@@ -95,7 +97,10 @@ namespace LUMCustomizations.Graph
                 line.ShipVia = data[15];
                 line.TrackingNumber = data[16];
                 #endregion
-                baseGraph.Transactions.Cache.Insert(line);
+                if (mapLine == null)
+                    baseGraph.Transactions.Cache.Insert(line);
+                else
+                    baseGraph.Transactions.Cache.Update(line);
             }
             baseGraph.Save.Press();
         }
@@ -125,7 +130,7 @@ namespace LUMCustomizations.Graph
                         poDoc.ReceiptType = poReceiptGroupData.Key.CSVType == "Receipt" ? POReceiptType.POReceipt :
                                             poReceiptGroupData.Key.CSVType == "Return" ? POReceiptType.POReturn : POReceiptType.TransferReceipt;
                         poDoc.ReceiptDate = poReceiptGroupData.Key.ReceiptDate;
-                        poDoc.VendorID = GetVendorInfoByAcctCD(baseGraph,$"{(poReceiptGroupData.Key.Region == "CHINA" ? "NV" : "SV")}{poReceiptGroupData.Key.Vendor}")?.BAccountID;
+                        poDoc.VendorID = GetVendorInfoByAcctCD(baseGraph, $"{(poReceiptGroupData.Key.Region == "CHINA" ? "NV" : "SV")}{poReceiptGroupData.Key.Vendor}")?.BAccountID;
                         //poDoc.VendorID = GetVendorInfoByAcctCD(baseGraph, $"{poReceiptGroupData.Key.Vendor}")?.BAccountID;
                         poDoc.CuryID = poReceiptGroupData.Key.Currency;
                         poDoc.AutoCreateInvoice = true;
