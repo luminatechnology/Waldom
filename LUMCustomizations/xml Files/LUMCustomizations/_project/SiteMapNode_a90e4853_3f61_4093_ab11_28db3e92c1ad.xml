@@ -25,7 +25,7 @@
         </layout>
         <data>
             <SiteMap>
-                <row Title="Process BDS Purchase Receipts and Invoices" Url="~/Pages/LM/LM501001.aspx" ScreenID="LM501001" NodeID="d4a47518-5621-4ea5-9352-71e83188244f" ParentID="00000000-0000-0000-0000-000000000000">
+                <row Title="Process BDS Purchase Receipts and Invoices" Url="~/Pages/LM/LM501002.aspx" ScreenID="LM501002" NodeID="a90e4853-3f61-4093-ab11-28db3e92c1ad" ParentID="00000000-0000-0000-0000-000000000000">
                     <MUIScreen IsPortal="0" WorkspaceID="5d973d14-a4d0-4193-9a87-7856486c62ee" Order="10" SubcategoryID="32130442-2305-4394-9389-cf915b191d2a" />
                 </row>
             </SiteMap>
